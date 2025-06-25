@@ -1,803 +1,637 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Muhammed Rashid - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease-out;
-        }
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background-color: #555;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 99;
-        }
-        .back-to-top.visible {
-            opacity: 1;
-        }
-        .timeline-item {
-            position: relative;
-            padding-left: 2rem;
-            margin-bottom: 2rem;
-        }
-        .timeline-item:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 24px;
-            height: calc(100% - 24px);
-            width: 2px;
-            background-color: #ddd;
-        }
-        .dark .timeline-item:not(:last-child)::after {
-            background-color: #444;
-        }
-        .timeline-dot {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background-color: #000;
-            z-index: 1;
-        }
-        .dark .timeline-dot {
-            background-color: #fff;
-        }
-        .skill-tag {
-            display: inline-block;
-            background-color: #f0f0f0;
-            color: #000;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-        }
-        .dark .skill-tag {
-            background-color: #333;
-            color: #fff;
-        }
-        .project-card {
-            transition: all 0.3s ease;
-            overflow: hidden;
-            position: relative;
-            height: 100%;
-        }
-        .project-image-container {
-            position: relative;
-            height: 200px;
-            overflow: hidden;
-            border-radius: 8px;
-        }
-        .project-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        .project-card:hover .project-image {
-            transform: scale(1.05);
-        }
-        .project-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.4);
-            z-index: 1;
-        }
-        .section-title {
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .dark .section-title {
-            border-bottom-color: #444;
-        }
-        .contact-input {
-            background-color: transparent;
-            border-bottom: 2px solid #ddd;
-            padding: 0.5rem 0;
-            transition: all 0.3s;
-        }
-        .dark .contact-input {
-            border-bottom-color: #444;
-        }
-        .contact-input:focus {
-            outline: none;
-            border-bottom-color: #000;
-        }
-        .dark .contact-input:focus {
-            border-bottom-color: #fff;
-        }
-        .typed-cursor {
-            display: inline;
-            opacity: 1;
-            animation: blink 0.7s infinite;
-        }
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-        .connect-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f0f0f0;
-            color: #000;
-            transition: all 0.3s ease;
-        }
-        .dark .connect-icon {
-            background-color: #333;
-            color: #fff;
-        }
-        .connect-icon:hover {
-            background-color: #000;
-            color: white;
-            transform: translateY(-3px);
-        }
-        .dark .connect-icon:hover {
-            background-color: #fff;
-            color: #000;
-        }
-        .theme-toggle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f0f0f0;
-            color: #000;
-            transition: all 0.3s ease;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-        .dark .theme-toggle {
-            background-color: #333;
-            color: #fff;
-        }
-        .theme-toggle:hover {
-            background-color: #000;
-            color: white;
-        }
-        .dark .theme-toggle:hover {
-            background-color: #fff;
-            color: #000;
-        }
-        body {
-            color: #000;
-            background-color: #fff;
-        }
-        .dark body {
-            color: #fff;
-            background-color: #000;
-        }
-        .btn-primary {
-            background-color: #000;
-            color: #fff;
-        }
-        .dark .btn-primary {
-            background-color: #fff;
-            color: #000;
-        }
-        #particles-js canvas {
-            display: block !important;
-        }
-    </style>
-</head>
-<body class="transition-colors duration-300">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="transition-colors duration-300">
     <div class="loading-screen">
-        <div class="spinner"></div>
+      <div class="spinner"></div>
     </div>
 
     <div id="particles-js"></div>
     <div class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
+      <i class="fas fa-arrow-up"></i>
     </div>
 
     <button id="themeToggle" class="theme-toggle">
-        <i id="themeIcon" class="fas fa-moon"></i>
+      <i id="themeIcon" class="fas fa-moon"></i>
     </button>
 
     <div class="container mx-auto px-4 py-8 max-w-6xl">
-        <header class="flex flex-col items-center mb-8 relative">
-            <div class="flex justify-center mb-4">
-                <div class="w-40 h-40 rounded-full overflow-hidden border-4 border-black dark:border-white">
-                    <img src="assets/profile.jpg" alt="Muhammed Rashid" class="w-full h-full object-cover">
-                </div>
-            </div>
-            
-            <div class="text-center mb-4">
-                <h1 class="text-4xl font-bold">Muhammed Rashid</h1>
-                <div class="text-xl mt-2">I'm a <span id="typed-text"></span><span class="typed-cursor">|</span></div>
-            </div>
-            
-            <div class="flex flex-wrap justify-center gap-4 mb-6">
-                <a href="mailto:mdrd.muhammedrashid@gmail.com" class="connect-icon" title="Email">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                <a href="tel:+918590687395" class="connect-icon" title="Phone">
-                    <i class="fas fa-phone"></i>
-                </a>
-                <a href="https://github.com/devmdrd" target="_blank" class="connect-icon" title="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="https://linkedin.com/in/devmdrd" target="_blank" class="connect-icon" title="LinkedIn">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <a href="assets/resume.pdf" download class="px-4 py-2 btn-primary rounded-full hover:opacity-90 transition flex items-center gap-2">
-                    <i class="fas fa-download"></i> Download Resume
-                </a>
-            </div>
-        </header>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-1 space-y-6">
-                <div class="mb-6">
-                    <h2 class="section-title text-xl font-bold">About Me</h2>
-                    <p>Passionate software engineer with expertise in full-stack development. I build efficient, scalable web applications with modern technologies.</p>
-                </div>
-
-                <div class="mb-6">
-                    <h2 class="section-title text-xl font-bold">Technical Skills</h2>
-                    <div>
-                        <div>
-                            <span class="skill-tag"><i class="fab fa-js-square"></i> JavaScript (ES6+)</span>
-                            <span class="skill-tag"><i class="fab fa-html5"></i> HTML5</span>
-                            <span class="skill-tag"><i class="fab fa-css3-alt"></i> CSS3</span>
-                            <span class="skill-tag"><i class="fab fa-react"></i> React.js</span>
-                            <span class="skill-tag"><i class="fab fa-node-js"></i> Node.js</span>
-                            <span class="skill-tag"><i class="fas fa-server"></i> Express.js</span>
-                            <span class="skill-tag"><i class="fas fa-leaf"></i> MongoDB</span>
-                            <span class="skill-tag"><i class="fas fa-database"></i> MySQL</span>
-                            <span class="skill-tag"><i class="fab fa-docker"></i> Docker</span>
-                            <span class="skill-tag"><i class="fas fa-network-wired"></i> Kubernetes</span>
-                            <span class="skill-tag"><i class="fab fa-git-alt"></i> Git</span>
-                        </div>
-                    </div>
-                    <h2 class="section-title text-xl font-bold mt-4">Featured</h2>
-                    <div class="mt-6 p-6 border rounded-lg shadow hover:shadow-md transition-shadow ">
-                        <div class="flex items-center space-x-4 mb-4">
-                            <img 
-                            src="assets/npm.png" 
-                            alt="axios-react-hook" 
-                            class="w-14 h-14 rounded border dark:border-gray-600"
-                            >
-                            <div>
-                            <a 
-                                href="https://www.npmjs.com/package/axios-react-hook" 
-                                target="_blank"
-                                class="text-xl font-bold flex items-center"
-                            >
-                                <i class="fab fa-npm mr-2 text-red-500"></i> axios-react-hook
-                            </a>
-                            <p class="text-sm">Lightweight React hook for Axios</p>
-                            </div>
-                        </div>
-
-                        <p class="text-sm mb-3">
-                            A reusable React hook for Axios supporting all HTTP methods, auto/manual requests, refetching, and custom Axios instances.
-                        </p>
-
-                        <div class="text-sm mb-4">
-                            <strong>Install:</strong>
-                            <code class="px-2 py-1 rounded text-xs">npm install axios-react-hook</code>
-                        </div>
-
-                        <div class="flex flex-wrap gap-3 mb-4">
-                            <img src="https://img.shields.io/npm/v/axios-react-hook?color=blue" alt="npm version">
-                            <img src="https://img.shields.io/npm/dm/axios-react-hook" alt="monthly downloads">
-                            <img src="https://img.shields.io/bundlephobia/minzip/axios-react-hook" alt="bundle size">
-                            <img src="https://img.shields.io/npm/l/axios-react-hook" alt="license">
-                        </div>
-
-                        <div class="flex space-x-4 text-xl">
-                            <a 
-                            href="https://github.com/devmdrd/axios-react-hook" 
-                            aria-label="GitHub"
-                            target="_blank"
-                            class="connect-icon"
-                            >
-                            <i class="fab fa-github"></i>
-                            </a>
-                            <a 
-                            href="https://www.npmjs.com/package/axios-react-hook" 
-                            aria-label="npm"
-                            target="_blank"
-                            class="connect-icon"
-                            >
-                            <i class="fab fa-npm"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- <div class="lg:hidden mb-6">
-                    <h2 class="section-title text-xl font-bold">Contact Me</h2>
-                    <form id="contactForm" class="space-y-4">
-                        <div>
-                            <input type="text" id="name" name="name" placeholder="Your Name" class="contact-input w-full" required>
-                        </div>
-                        <div>
-                            <input type="email" id="email" name="email" placeholder="Your Email" class="contact-input w-full" required>
-                        </div>
-                        <div>
-                            <input type="text" id="subject" name="subject" placeholder="Subject" class="contact-input w-full" required>
-                        </div>
-                        <div>
-                            <textarea id="message" name="message" rows="3" placeholder="Your Message" class="contact-input w-full" required></textarea>
-                        </div>
-                        <button type="submit" class="px-6 py-2 btn-primary rounded-full hover:opacity-90 transition w-full">
-                            Send Message
-                        </button>
-                    </form>
-                    <div id="formSuccess" class="hidden mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-lg">
-                        Your message has been sent successfully!
-                    </div>
-                    <div id="formError" class="hidden mt-4 p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-lg">
-                        There was an error sending your message. Please try again.
-                    </div>
-                </div> -->
-            </div>
-
-            <div class="lg:col-span-2 space-y-6">
-                <div class="mb-6">
-                    <h2 class="section-title text-xl font-bold">Experience</h2>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="pl-6">
-                            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
-                                <h3 class="text-lg font-bold">Junior Software Engineer</h3>
-                                <span>June 2024 – Present</span>
-                            </div>
-                            <div class="flex items-center mb-3">
-                                <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
-                                    <img src="assets/junkies.jpg" alt="Junkies Coder" class="w-full h-full object-cover">
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold">Junkies Coder</h4>
-                                    <p class="text-sm">Ahmedabad, Gujarat • Remote</p>
-                                </div>
-                            </div>
-                            <ul class="list-disc pl-5 space-y-1">
-                                <li>Designed and implemented scalable, high-performance RESTful APIs using Node.js and Express, resulting in a 25% improvement in application response time</li>
-                                <li>Proactively diagnosed and resolved critical production issues, reducing overall system downtime by 30% and significantly enhancing platform stability</li>
-                                <li>Played a key role in Agile ceremonies—including daily stand-ups, sprint planning, and retrospectives—ensuring consistent delivery of high-quality, test-driven code</li>
-                                <li>Partnered closely with cross-functional teams (Design, QA, and DevOps) to deliver robust, production-ready features on time and within scope</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="pl-6">
-                            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
-                                <h3 class="text-lg font-bold">MERN Stack Developer Trainee</h3>
-                                <span>June 2023 – May 2024</span>
-                            </div>
-                            <div class="flex items-center mb-3">
-                                <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
-                                    <img src="assets/brototype.png" alt="Brototype" class="w-full h-full object-cover">
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold">Brototype</h4>
-                                    <p class="text-sm">Trivandrum, Kerala • On-site</p>
-                                </div>
-                            </div>
-                            <ul class="list-disc pl-5 space-y-1">
-                                <li>Received comprehensive training in full-stack web development with a focus on React, Node.js, Express, and MongoDB</li>
-                                <li>Developed and deployed real-world applications, emphasizing clean, maintainable code and industry best practices</li>
-                                <li>Acquired hands-on experience in modern web architecture, RESTful API design, and end-to-end deployment workflows</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                 <div class="mb-12">
-                    <h2 class="text-2xl font-bold mb-6">Projects</h2>
-                    <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-8">
-                        
-                        <div class="border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div class="relative group">
-                            <img src="assets/talenttrove.png" alt="TalentTrove" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-sm text-center p-4">
-                            A comprehensive job portal with role-based dashboards and real-time communication.
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <h3 class="text-lg font-semibold mb-2">TalentTrove – Online Job Portal</h3>
-                            <div class="flex flex-wrap gap-2 text-sm mb-3">
-                                <span class="skill-tag"><i class="fab fa-react"></i> React</span>
-                                <span class="skill-tag"><i class="fab fa-node-js"></i> Node.js</span>
-                                <span class="skill-tag"><i class="fas fa-leaf"></i> MongoDB</span>
-                                <span class="skill-tag"><i class="fas fa-plug"></i> Socket.IO</span>
-                                <span class="skill-tag"><i class="fas fa-unlock-alt"></i> OAuth</span>
-                            </div>
-                            <div class="flex space-x-4 text-xl text-gray-700">
-                            <a href="https://github.com/devmdrd/TalentTrove" class="connect-icon" aria-label="GitHub">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="https://talenttrove.online/" class="connect-icon" aria-label="Live Demo">
-                                <i class="fas fa-up-right-from-square"></i>
-                            </a>
-                            </div>
-                        </div>
-                        </div>
-
-                        <div class="border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div class="relative group">
-                            <img src="assets/ecart.png" alt="E-Cart" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-sm text-center p-4">
-                            A full-featured e-commerce platform with payment and admin features.
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <h3 class="text-lg font-semibold mb-2">E-Cart – E-commerce Platform</h3>
-                            <div class="flex flex-wrap gap-2 text-sm mb-3">
-                                <span class="skill-tag"><i class="fab fa-node-js"></i> Node.js</span>
-                                <span class="skill-tag"><i class="fas fa-server"></i> Express.js</span>
-                                <span class="skill-tag"><i class="fas fa-leaf"></i> MongoDB</span>
-                                <span class="skill-tag"><i class="fas fa-code"></i> EJS</span>
-                                <span class="skill-tag"><i class="fab fa-cc-stripe"></i> Stripe</span>
-                            </div>
-                            <div class="flex space-x-4 text-xl text-gray-700">
-                            <a href="https://github.com/devmdrd/ecart" class="connect-icon" aria-label="GitHub">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="https://ecart.in.net/" class="connect-icon" aria-label="Live Demo">
-                                <i class="fas fa-up-right-from-square"></i>
-                            </a>
-                            </div>
-                        </div>
-                        </div>
-
-                    </div>
-                </div>
-                
-                <div class="mb-6">
-                    <h2 class="section-title text-xl font-bold">Education</h2>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="pl-6">
-                            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
-                                <h3 class="text-lg font-bold">Bachelor of Computer Applications (BCA)</h3>
-                                <span>2020 – 2023</span>
-                            </div>
-                            <div class="flex items-center mb-3">
-                                <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
-                                    <img src="assets/college.png" alt="Santhigiri College" class="w-full h-full object-cover">
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold">Santhigiri College of Computer Sciences</h4>
-                                    <p class="text-sm">Mahatma Gandhi University (MGU)</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="pl-6">
-                            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
-                                <h3 class="text-lg font-bold">Higher Secondary Education (Computer Science)</h3>
-                                <span>2018 – 2020</span>
-                            </div>
-                            <div class="flex items-center mb-3">
-                                <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
-                                    <img src="assets/hss.jpg" alt="St. George's HSS" class="w-full h-full object-cover">
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold">St. George's Higher Secondary School</h4>
-                                    <p class="text-sm">Kerala State Board of Higher Secondary Education (DHSE Kerala)</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="pl-6">
-                            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
-                                <h3 class="text-lg font-bold">Secondary Education</h3>
-                                <span>2017 – 2018</span>
-                            </div>
-                            <div class="flex items-center mb-3">
-                                <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
-                                    <img src="assets/cbse.png" alt="Al-Azhar Public School" class="w-full h-full object-cover">
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold">Al-Azhar Public School</h4>
-                                    <p class="text-sm">Central Board of Secondary Education (CBSE)</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="block">
-                    <h2 class="section-title text-xl font-bold">Contact Me</h2>
-                    <form id="contactFormDesktop" class="space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <input type="text" id="nameDesktop" name="name" placeholder="Your Name" class="contact-input w-full" required>
-                            </div>
-                            <div>
-                                <input type="email" id="emailDesktop" name="email" placeholder="Your Email" class="contact-input w-full" required>
-                            </div>
-                        </div>
-                        <div>
-                            <input type="text" id="subjectDesktop" name="subject" placeholder="Subject" class="contact-input w-full" required>
-                        </div>
-                        <div>
-                            <textarea id="messageDesktop" name="message" rows="4" placeholder="Your Message" class="contact-input w-full" required></textarea>
-                        </div>
-                        <button type="submit" class="px-6 py-2 btn-primary rounded-full hover:opacity-90 transition flex items-center justify-center">
-                            <span id="submitText">Send Message</span>
-                            <span id="submitSpinner" class="hidden ml-2">
-                                <i class="fas fa-spinner fa-spin"></i>
-                            </span>
-                        </button>
-                    </form>
-                    <div id="formSuccessDesktop" class="hidden mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-lg">
-                        Your message has been sent successfully!
-                    </div>
-                    <div id="formErrorDesktop" class="hidden mt-4 p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-lg">
-                        There was an error sending your message. Please try again.
-                    </div>
-                </div>
-            </div>
+      <header class="flex flex-col items-center mb-8 relative">
+        <div class="flex justify-center mb-4">
+          <div
+            class="w-40 h-40 rounded-full overflow-hidden border-4 border-black dark:border-white"
+          >
+            <img
+              src="assets/profile.jpg"
+              alt="Muhammed Rashid"
+              class="w-full h-full object-cover"
+            />
+          </div>
         </div>
+
+        <div class="text-center mb-4">
+          <h1 class="text-4xl font-bold">Muhammed Rashid</h1>
+          <div class="text-xl mt-2">
+            I'm a <span id="typed-text"></span
+            ><span class="typed-cursor">|</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-4 mb-6">
+          <a
+            href="mailto:mdrd.muhammedrashid@gmail.com"
+            class="connect-icon"
+            title="Email"
+          >
+            <i class="fas fa-envelope"></i>
+          </a>
+          <a href="tel:+918590687395" class="connect-icon" title="Phone">
+            <i class="fas fa-phone"></i>
+          </a>
+          <a
+            href="https://github.com/devmdrd"
+            target="_blank"
+            class="connect-icon"
+            title="GitHub"
+          >
+            <i class="fab fa-github"></i>
+          </a>
+          <a
+            href="https://linkedin.com/in/devmdrd"
+            target="_blank"
+            class="connect-icon"
+            title="LinkedIn"
+          >
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <a
+            href="assets/resume.pdf"
+            download
+            class="px-4 py-2 btn-primary rounded-full hover:opacity-90 transition flex items-center gap-2"
+          >
+            <i class="fas fa-download"></i> Download Resume
+          </a>
+        </div>
+      </header>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-1 space-y-6">
+          <div class="mb-6">
+            <h2 class="section-title text-xl font-bold">About Me</h2>
+            <p>
+              Passionate software engineer with expertise in full-stack
+              development. I build efficient, scalable web applications with
+              modern technologies.
+            </p>
+          </div>
+
+          <div class="mb-6">
+            <h2 class="section-title text-xl font-bold">Technical Skills</h2>
+            <div>
+              <div>
+                <span class="skill-tag"
+                  ><i class="fab fa-js-square"></i> JavaScript (ES6+)</span
+                >
+                <span class="skill-tag"
+                  ><i class="fab fa-html5"></i> HTML5</span
+                >
+                <span class="skill-tag"
+                  ><i class="fab fa-css3-alt"></i> CSS3</span
+                >
+                <span class="skill-tag"
+                  ><i class="fab fa-react"></i> React.js</span
+                >
+                <span class="skill-tag"
+                  ><i class="fab fa-node-js"></i> Node.js</span
+                >
+                <span class="skill-tag"
+                  ><i class="fas fa-server"></i> Express.js</span
+                >
+                <span class="skill-tag"
+                  ><i class="fas fa-leaf"></i> MongoDB</span
+                >
+                <span class="skill-tag"
+                  ><i class="fas fa-database"></i> MySQL</span
+                >
+                <span class="skill-tag"
+                  ><i class="fab fa-docker"></i> Docker</span
+                >
+                <span class="skill-tag"
+                  ><i class="fas fa-network-wired"></i> Kubernetes</span
+                >
+                <span class="skill-tag"
+                  ><i class="fab fa-git-alt"></i> Git</span
+                >
+              </div>
+            </div>
+            <h2 class="section-title text-xl font-bold mt-4">Featured</h2>
+            <div
+              class="mt-6 p-6 border rounded-lg shadow hover:shadow-md transition-shadow"
+            >
+              <div class="flex items-center space-x-4 mb-4">
+                <img
+                  src="assets/npm.png"
+                  alt="axios-react-hook"
+                  class="w-14 h-14 rounded border dark:border-gray-600"
+                />
+                <div>
+                  <a
+                    href="https://www.npmjs.com/package/axios-react-hook"
+                    target="_blank"
+                    class="text-xl font-bold flex items-center"
+                  >
+                    <i class="fab fa-npm mr-2 text-red-500"></i>
+                    axios-react-hook
+                  </a>
+                  <p class="text-sm">Lightweight React hook for Axios</p>
+                </div>
+              </div>
+
+              <p class="text-sm mb-3">
+                A reusable React hook for Axios supporting all HTTP methods,
+                auto/manual requests, refetching, and custom Axios instances.
+              </p>
+
+              <div class="text-sm mb-4">
+                <strong>Install:</strong>
+                <code class="px-2 py-1 rounded text-xs"
+                  >npm install axios-react-hook</code
+                >
+              </div>
+
+              <div class="flex flex-wrap gap-3 mb-4">
+                <img
+                  src="https://img.shields.io/npm/v/axios-react-hook?color=blue"
+                  alt="npm version"
+                />
+                <img
+                  src="https://img.shields.io/npm/dm/axios-react-hook"
+                  alt="monthly downloads"
+                />
+                <img
+                  src="https://img.shields.io/bundlephobia/minzip/axios-react-hook"
+                  alt="bundle size"
+                />
+                <img
+                  src="https://img.shields.io/npm/l/axios-react-hook"
+                  alt="license"
+                />
+              </div>
+
+              <div class="flex space-x-4 text-xl">
+                <a
+                  href="https://github.com/devmdrd/axios-react-hook"
+                  aria-label="GitHub"
+                  target="_blank"
+                  class="connect-icon"
+                >
+                  <i class="fab fa-github"></i>
+                </a>
+                <a
+                  href="https://www.npmjs.com/package/axios-react-hook"
+                  aria-label="npm"
+                  target="_blank"
+                  class="connect-icon"
+                >
+                  <i class="fab fa-npm"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2 space-y-6">
+          <div class="mb-6">
+            <h2 class="section-title text-xl font-bold">Experience</h2>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="pl-6">
+                <div
+                  class="flex flex-col md:flex-row md:justify-between md:items-center mb-2"
+                >
+                  <h3 class="text-lg font-bold">Junior Software Engineer</h3>
+                  <span>June 2024 – Present</span>
+                </div>
+                <div class="flex items-center mb-3">
+                  <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+                    <img
+                      src="assets/junkies.jpg"
+                      alt="Junkies Coder"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h4 class="font-semibold">Junkies Coder</h4>
+                    <p class="text-sm">Ahmedabad, Gujarat • Remote</p>
+                  </div>
+                </div>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>
+                    Designed and implemented scalable, high-performance RESTful
+                    APIs using Node.js and Express, resulting in a 25%
+                    improvement in application response time
+                  </li>
+                  <li>
+                    Proactively diagnosed and resolved critical production
+                    issues, reducing overall system downtime by 30% and
+                    significantly enhancing platform stability
+                  </li>
+                  <li>
+                    Played a key role in Agile ceremonies—including daily
+                    stand-ups, sprint planning, and retrospectives—ensuring
+                    consistent delivery of high-quality, test-driven code
+                  </li>
+                  <li>
+                    Partnered closely with cross-functional teams (Design, QA,
+                    and DevOps) to deliver robust, production-ready features on
+                    time and within scope
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="pl-6">
+                <div
+                  class="flex flex-col md:flex-row md:justify-between md:items-center mb-2"
+                >
+                  <h3 class="text-lg font-bold">
+                    MERN Stack Developer Trainee
+                  </h3>
+                  <span>June 2023 – May 2024</span>
+                </div>
+                <div class="flex items-center mb-3">
+                  <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+                    <img
+                      src="assets/brototype.png"
+                      alt="Brototype"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h4 class="font-semibold">Brototype</h4>
+                    <p class="text-sm">Trivandrum, Kerala • On-site</p>
+                  </div>
+                </div>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>
+                    Received comprehensive training in full-stack web
+                    development with a focus on React, Node.js, Express, and
+                    MongoDB
+                  </li>
+                  <li>
+                    Developed and deployed real-world applications, emphasizing
+                    clean, maintainable code and industry best practices
+                  </li>
+                  <li>
+                    Acquired hands-on experience in modern web architecture,
+                    RESTful API design, and end-to-end deployment workflows
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">Projects</h2>
+            <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-8">
+              <div
+                class="border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+              >
+                <div class="relative group">
+                  <img
+                    src="assets/talenttrove.png"
+                    alt="TalentTrove"
+                    class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div
+                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-sm text-center p-4"
+                  >
+                    A comprehensive job portal with role-based dashboards and
+                    real-time communication.
+                  </div>
+                </div>
+                <div class="p-5">
+                  <h3 class="text-lg font-semibold mb-2">
+                    TalentTrove – Online Job Portal
+                  </h3>
+                  <div class="flex flex-wrap gap-2 text-sm mb-3">
+                    <span class="skill-tag"
+                      ><i class="fab fa-react"></i> React</span
+                    >
+                    <span class="skill-tag"
+                      ><i class="fab fa-node-js"></i> Node.js</span
+                    >
+                    <span class="skill-tag"
+                      ><i class="fas fa-leaf"></i> MongoDB</span
+                    >
+                    <span class="skill-tag"
+                      ><i class="fas fa-plug"></i> Socket.IO</span
+                    >
+                    <span class="skill-tag"
+                      ><i class="fas fa-unlock-alt"></i> OAuth</span
+                    >
+                  </div>
+                  <div class="flex space-x-4 text-xl text-gray-700">
+                    <a
+                      href="https://github.com/devmdrd/TalentTrove"
+                      class="connect-icon"
+                      aria-label="GitHub"
+                    >
+                      <i class="fab fa-github"></i>
+                    </a>
+                    <a
+                      href="https://talenttrove.online/"
+                      class="connect-icon"
+                      aria-label="Live Demo"
+                    >
+                      <i class="fas fa-up-right-from-square"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+              >
+                <div class="relative group">
+                  <img
+                    src="assets/ecart.png"
+                    alt="E-Cart"
+                    class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div
+                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-sm text-center p-4"
+                  >
+                    A full-featured e-commerce platform with payment and admin
+                    features.
+                  </div>
+                </div>
+                <div class="p-5">
+                  <h3 class="text-lg font-semibold mb-2">
+                    E-Cart – E-commerce Platform
+                  </h3>
+                  <div class="flex flex-wrap gap-2 text-sm mb-3">
+                    <span class="skill-tag"
+                      ><i class="fab fa-node-js"></i> Node.js</span
+                    >
+                    <span class="skill-tag"
+                      ><i class="fas fa-server"></i> Express.js</span
+                    >
+                    <span class="skill-tag"
+                      ><i class="fas fa-leaf"></i> MongoDB</span
+                    >
+                    <span class="skill-tag"
+                      ><i class="fas fa-code"></i> EJS</span
+                    >
+                    <span class="skill-tag"
+                      ><i class="fab fa-cc-stripe"></i> Stripe</span
+                    >
+                  </div>
+                  <div class="flex space-x-4 text-xl text-gray-700">
+                    <a
+                      href="https://github.com/devmdrd/ecart"
+                      class="connect-icon"
+                      aria-label="GitHub"
+                    >
+                      <i class="fab fa-github"></i>
+                    </a>
+                    <a
+                      href="https://ecart.in.net/"
+                      class="connect-icon"
+                      aria-label="Live Demo"
+                    >
+                      <i class="fas fa-up-right-from-square"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <h2 class="section-title text-xl font-bold">Education</h2>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="pl-6">
+                <div
+                  class="flex flex-col md:flex-row md:justify-between md:items-center mb-2"
+                >
+                  <h3 class="text-lg font-bold">
+                    Bachelor of Computer Applications (BCA)
+                  </h3>
+                  <span>2020 – 2023</span>
+                </div>
+                <div class="flex items-center mb-3">
+                  <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+                    <img
+                      src="assets/college.png"
+                      alt="Santhigiri College"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h4 class="font-semibold">
+                      Santhigiri College of Computer Sciences
+                    </h4>
+                    <p class="text-sm">Mahatma Gandhi University (MGU)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="pl-6">
+                <div
+                  class="flex flex-col md:flex-row md:justify-between md:items-center mb-2"
+                >
+                  <h3 class="text-lg font-bold">
+                    Higher Secondary Education (Computer Science)
+                  </h3>
+                  <span>2018 – 2020</span>
+                </div>
+                <div class="flex items-center mb-3">
+                  <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+                    <img
+                      src="assets/hss.jpg"
+                      alt="St. George's HSS"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h4 class="font-semibold">
+                      St. George's Higher Secondary School
+                    </h4>
+                    <p class="text-sm">
+                      Kerala State Board of Higher Secondary Education (DHSE
+                      Kerala)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="pl-6">
+                <div
+                  class="flex flex-col md:flex-row md:justify-between md:items-center mb-2"
+                >
+                  <h3 class="text-lg font-bold">Secondary Education</h3>
+                  <span>2017 – 2018</span>
+                </div>
+                <div class="flex items-center mb-3">
+                  <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+                    <img
+                      src="assets/cbse.png"
+                      alt="Al-Azhar Public School"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h4 class="font-semibold">Al-Azhar Public School</h4>
+                    <p class="text-sm">
+                      Central Board of Secondary Education (CBSE)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="block">
+            <h2 class="section-title text-xl font-bold">Contact Me</h2>
+            <form id="contactFormDesktop" class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <input
+                    type="text"
+                    id="nameDesktop"
+                    name="name"
+                    placeholder="Your Name"
+                    class="contact-input w-full"
+                    required
+                  />
+                </div>
+                <div>
+                  <input
+                    type="email"
+                    id="emailDesktop"
+                    name="email"
+                    placeholder="Your Email"
+                    class="contact-input w-full"
+                    required
+                  />
+                </div>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  id="subjectDesktop"
+                  name="subject"
+                  placeholder="Subject"
+                  class="contact-input w-full"
+                  required
+                />
+              </div>
+              <div>
+                <textarea
+                  id="messageDesktop"
+                  name="message"
+                  rows="4"
+                  placeholder="Your Message"
+                  class="contact-input w-full"
+                  required
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="px-6 py-2 btn-primary rounded-full hover:opacity-90 transition flex items-center justify-center"
+              >
+                <span id="submitText">Send Message</span>
+                <span id="submitSpinner" class="hidden ml-2">
+                  <i class="fas fa-spinner fa-spin"></i>
+                </span>
+              </button>
+            </form>
+            <div
+              id="formSuccessDesktop"
+              class="hidden mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-lg"
+            >
+              Your message has been sent successfully!
+            </div>
+            <div
+              id="formErrorDesktop"
+              class="hidden mt-4 p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-lg"
+            >
+              There was an error sending your message. Please try again.
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <footer class="py-6 mt-8">
-        <div class="container mx-auto px-4 text-center">
-            <div class="flex justify-center space-x-6 mb-4">
-                <a href="https://github.com/devmdrd" target="_blank" class="connect-icon" title="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="https://linkedin.com/in/devmdrd" target="_blank" class="connect-icon" title="LinkedIn">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="https://twitter.com/devmdrd" target="_blank" class="connect-icon" title="Twitter">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="https://leetcode.com/devmdrd" target="_blank" class="connect-icon" title="LeetCode">
-                    <i class="fas fa-code"></i>
-                </a>
-            </div>
-            <p>© 2025 Muhammed Rashid. All rights reserved. Designed and developed with ❤️.</p>
+      <div class="container mx-auto px-4 text-center">
+        <div class="flex justify-center space-x-6 mb-4">
+          <a
+            href="https://github.com/devmdrd"
+            target="_blank"
+            class="connect-icon"
+            title="GitHub"
+          >
+            <i class="fab fa-github"></i>
+          </a>
+          <a
+            href="https://linkedin.com/in/devmdrd"
+            target="_blank"
+            class="connect-icon"
+            title="LinkedIn"
+          >
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a
+            href="https://twitter.com/devmdrd"
+            target="_blank"
+            class="connect-icon"
+            title="Twitter"
+          >
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a
+            href="https://leetcode.com/devmdrd"
+            target="_blank"
+            class="connect-icon"
+            title="LeetCode"
+          >
+            <i class="fas fa-code"></i>
+          </a>
         </div>
+        <p>
+          © 2025 Muhammed Rashid. All rights reserved. Designed and developed
+          with ❤️.
+        </p>
+      </div>
     </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                document.querySelector('.loading-screen').style.opacity = '0';
-                setTimeout(function() {
-                    document.querySelector('.loading-screen').style.display = 'none';
-                }, 500);
-            }, 1500);
-
-            const themeToggle = document.getElementById('themeToggle');
-            const themeIcon = document.getElementById('themeIcon');
-            const html = document.documentElement;
-            
-            function initTheme() {
-                const savedTheme = localStorage.getItem('theme');
-                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                
-                if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-                    html.classList.add('dark');
-                    themeIcon.classList.remove('fa-moon');
-                    themeIcon.classList.add('fa-sun');
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    html.classList.remove('dark');
-                    themeIcon.classList.remove('fa-sun');
-                    themeIcon.classList.add('fa-moon');
-                    localStorage.setItem('theme', 'light');
-                }
-            }
-            
-            themeToggle.addEventListener('click', function() {
-                html.classList.toggle('dark');
-                const isDark = html.classList.contains('dark');
-                
-                if (isDark) {
-                    themeIcon.classList.remove('fa-moon');
-                    themeIcon.classList.add('fa-sun');
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    themeIcon.classList.remove('fa-sun');
-                    themeIcon.classList.add('fa-moon');
-                    localStorage.setItem('theme', 'light');
-                }
-            });
-            
-            initTheme();
-
-            const typed = new Typed('#typed-text', {
-                strings: ['Software Engineer', 'Full Stack Developer', 'MERN Stack Developer'],
-                typeSpeed: 50,
-                backSpeed: 30,
-                loop: true,
-                showCursor: false
-            });
-
-            window.addEventListener('scroll', function() {
-                const backToTop = document.getElementById('backToTop');
-                if (window.pageYOffset > 300) {
-                    backToTop.classList.add('visible');
-                } else {
-                    backToTop.classList.remove('visible');
-                }
-            });
-
-            document.getElementById('backToTop').addEventListener('click', function() {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ 
-                alpha: true,
-                antialias: true
-            });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setClearColor(0x000000, 0); 
-            document.getElementById('particles-js').appendChild(renderer.domElement);
-
-            function getParticleColor() {
-                return html.classList.contains('dark') ? 0xffffff : 0x000000;
-            }
-
-            const particlesGeometry = new THREE.BufferGeometry();
-            const particlesCount = 1500;
-            const posArray = new Float32Array(particlesCount * 3);
-
-            for (let i = 0; i < particlesCount * 3; i++) {
-                posArray[i] = (Math.random() - 0.5) * 10;
-            }
-
-            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-            const particlesMaterial = new THREE.PointsMaterial({
-                size: 0.02,
-                color: getParticleColor(),
-                transparent: true,
-                opacity: 0.8
-            });
-
-            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-            scene.add(particlesMesh);
-
-            camera.position.z = 3;
-
-            function animate() {
-                requestAnimationFrame(animate);
-                particlesMesh.rotation.x += 0.0005;
-                particlesMesh.rotation.y += 0.0005;
-                renderer.render(scene, camera);
-            }
-
-            animate();
-
-            window.addEventListener('resize', function() {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-
-            themeToggle.addEventListener('click', function() {
-                particlesMaterial.color.setHex(getParticleColor());
-            });
-
-            const form = document.getElementById('contactFormDesktop');
-            const success = document.getElementById('formSuccessDesktop');
-            const error = document.getElementById('formErrorDesktop');
-            const submitText = document.getElementById('submitText');
-            const submitSpinner = document.getElementById('submitSpinner');
-
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                // Hide messages and show loading state
-                success.classList.add('hidden');
-                error.classList.add('hidden');
-                submitText.textContent = 'Sending...';
-                submitSpinner.classList.remove('hidden');
-
-                try {
-                    const formData = new FormData(form);
-                    const response = await fetch('https://formspree.io/f/mnnvvnwp', {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-
-                    if (response.ok) {
-                        form.reset();
-                        success.classList.remove('hidden');
-                        setTimeout(() => success.classList.add('hidden'), 5000);
-                    } else {
-                        const errorData = await response.json();
-                        if (errorData.errors) {
-                            error.textContent = errorData.errors.map(err => err.message).join(', ');
-                        }
-                        error.classList.remove('hidden');
-                        setTimeout(() => error.classList.add('hidden'), 5000);
-                    }
-                } catch (err) {
-                    error.textContent = 'Network error. Please try again later.';
-                    error.classList.remove('hidden');
-                    setTimeout(() => error.classList.add('hidden'), 5000);
-                } finally {
-                    submitText.textContent = 'Send Message';
-                    submitSpinner.classList.add('hidden');
-                }
-            });
-        });
-    </script>
-</body>
+    <script src="main.js"></script>
+  </body>
 </html>
