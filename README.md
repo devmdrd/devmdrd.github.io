@@ -80,7 +80,7 @@ I’m Muhammed Rashid, a Junior Software Engineer passionate about crafting user
 
 Feel free to connect with me:
 
-- 📧 Email: your.email@example.com
+- 📧 Email: mdrd.muhammedrashid@gmail.com
 - 💼 LinkedIn: [devmdrd](https://linkedin.com/in/devmdrd)
 - 🐱 GitHub: [devmdrd](https://github.com/devmdrd)
 
