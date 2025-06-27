@@ -85,17 +85,78 @@ document.addEventListener("DOMContentLoaded", function () {
     renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
-      powerPreference: "high-performance",
+      powerPreference: 'high-performance'
     });
+    
+    const isMobile = window.innerWidth <= 768;
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
+    
     document.getElementById("three-container").appendChild(renderer.domElement);
 
-    createObjects();
-    camera.position.z = 5;
+    createObjects(isMobile); 
+    camera.position.z = isMobile ? 7 : 5; 
 
     window.addEventListener("resize", onWindowResize);
     animate();
+  }
+
+  function createObjects(isMobile) {
+    const torusSize = isMobile ? 1.0 : 1.5;
+    const torusThickness = isMobile ? 0.3 : 0.5;
+    
+    const geometry = new THREE.TorusGeometry(torusSize, torusThickness, isMobile ? 8 : 16, isMobile ? 50 : 100);
+    const edges = new THREE.EdgesGeometry(geometry);
+    const material = new THREE.LineBasicMaterial({
+      color: getWireColor(),
+      transparent: true,
+      opacity: isMobile ? 0.6 : 0.8, 
+    });
+
+    wireframe = new THREE.LineSegments(edges, material);
+    scene.add(wireframe);
+
+    const glowGeometry = new THREE.TorusGeometry(torusSize + 0.02, torusThickness + 0.02, isMobile ? 16 : 32, isMobile ? 60 : 100);
+    const glowMaterial = new THREE.MeshBasicMaterial({
+      color: getGlowColor(),
+      transparent: true,
+      opacity: isMobile ? 0.1 : 0.15, 
+      blending: THREE.AdditiveBlending,
+    });
+
+    glow = new THREE.Mesh(glowGeometry, glowMaterial);
+    scene.add(glow);
+
+    const particleCount = isMobile ? 50 : 100;
+    const particles = new THREE.BufferGeometry();
+    const posArray = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount * 3; i++) {
+      posArray[i] = (Math.random() - 0.5) * (isMobile ? 2 : 3); 
+    }
+
+    particles.setAttribute("position", new THREE.BufferAttribute(posArray, 3));
+    const particleMaterial = new THREE.PointsMaterial({
+      size: isMobile ? 0.02 : 0.03,
+      color: getWireColor(),
+      transparent: true,
+      opacity: isMobile ? 0.4 : 0.6, 
+    });
+
+    particleMesh = new THREE.Points(particles, particleMaterial);
+    scene.add(particleMesh);
+  }
+
+  function onWindowResize() {
+    const isMobile = window.innerWidth <= 768;
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.position.z = isMobile ? 7 : 5;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
+    
+    cleanupThreeJS();
+    initThreeJS();
   }
 
   function createObjects() {
