@@ -7,18 +7,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body class="transition-colors duration-300">
     <div class="loading-screen">
       <div class="spinner"></div>
     </div>
 
-    <div id="particles-js"></div>
+    <div id="three-container"></div>
     <div class="back-to-top" id="backToTop">
       <i class="fas fa-arrow-up"></i>
     </div>
@@ -30,60 +28,35 @@
     <div class="container mx-auto px-4 py-8 max-w-6xl">
       <header class="flex flex-col items-center mb-8 relative">
         <div class="flex justify-center mb-4">
-          <div
-            class="w-40 h-40 rounded-full overflow-hidden border-4 border-black dark:border-white"
-          >
-            <img
-              src="assets/profile.jpg"
-              alt="Muhammed Rashid"
-              class="w-full h-full object-cover"
-            />
+          <div class="w-40 h-40 rounded-full overflow-hidden border-4 border-black dark:border-white">
+            <img src="assets/profile.jpg" alt="Muhammed Rashid" class="w-full h-full object-cover" />
           </div>
         </div>
 
         <div class="text-center mb-4">
           <h1 class="text-4xl font-bold">Muhammed Rashid</h1>
           <div class="text-xl mt-2">
-            I'm a <span id="typed-text"></span
-            ><span class="typed-cursor">|</span>
+            I'm a <span id="typed-text"></span><span class="typed-cursor">|</span>
           </div>
         </div>
 
         <div class="flex flex-wrap justify-center gap-4 mb-6">
-          <a
-            href="mailto:mdrd.muhammedrashid@gmail.com"
-            class="connect-icon"
-            title="Email"
-          >
+          <a href="mailto:mdrd.muhammedrashid@gmail.com" class="connect-icon" title="Email">
             <i class="fas fa-envelope"></i>
           </a>
           <a href="tel:+918590687395" class="connect-icon" title="Phone">
             <i class="fas fa-phone"></i>
           </a>
-          <a
-            href="https://github.com/devmdrd"
-            target="_blank"
-            class="connect-icon"
-            title="GitHub"
-          >
+          <a href="https://github.com/devmdrd" target="_blank" class="connect-icon" title="GitHub">
             <i class="fab fa-github"></i>
           </a>
-          <a
-            href="https://linkedin.com/in/devmdrd"
-            target="_blank"
-            class="connect-icon"
-            title="LinkedIn"
-          >
+          <a href="https://linkedin.com/in/devmdrd" target="_blank" class="connect-icon" title="LinkedIn">
             <i class="fab fa-linkedin-in"></i>
           </a>
         </div>
 
         <div class="flex items-center space-x-4">
-          <a
-            href="assets/resume.pdf"
-            download
-            class="px-4 py-2 btn-primary rounded-full hover:opacity-90 transition flex items-center gap-2"
-          >
+          <a href="assets/resume.pdf" download class="px-4 py-2 btn-primary rounded-full hover:opacity-90 transition flex items-center gap-2">
             <i class="fas fa-download"></i> Download Resume
           </a>
         </div>
@@ -103,58 +76,47 @@
           <div class="mb-6">
             <h2 class="section-title text-xl font-bold">Technical Skills</h2>
             <div>
-              <div>
-                <span class="skill-tag"
-                  ><i class="fab fa-js-square"></i> JavaScript (ES6+)</span
-                >
-                <span class="skill-tag"
-                  ><i class="fab fa-html5"></i> HTML5</span
-                >
-                <span class="skill-tag"
-                  ><i class="fab fa-css3-alt"></i> CSS3</span
-                >
-                <span class="skill-tag"
-                  ><i class="fab fa-react"></i> React.js</span
-                >
-                <span class="skill-tag"
-                  ><i class="fab fa-node-js"></i> Node.js</span
-                >
-                <span class="skill-tag"
-                  ><i class="fas fa-server"></i> Express.js</span
-                >
-                <span class="skill-tag"
-                  ><i class="fas fa-leaf"></i> MongoDB</span
-                >
-                <span class="skill-tag"
-                  ><i class="fas fa-database"></i> MySQL</span
-                >
-                <span class="skill-tag"
-                  ><i class="fab fa-docker"></i> Docker</span
-                >
-                <span class="skill-tag"
-                  ><i class="fas fa-network-wired"></i> Kubernetes</span
-                >
-                <span class="skill-tag"
-                  ><i class="fab fa-git-alt"></i> Git</span
-                >
+              <div class="flex flex-wrap gap-2">
+                <span class="skill-tag flex items-center gap-2">
+                  <i class="devicon-javascript-plain colored text-lg"></i> JavaScript (ES6+)
+                </span>
+                <span class="skill-tag flex items-center gap-2">
+                  <i class="devicon-html5-plain colored text-lg"></i> HTML5
+                </span>
+                <span class="skill-tag flex items-center gap-2">
+                  <i class="devicon-css3-plain colored text-lg"></i> CSS3
+                </span>
+                <span class="skill-tag flex items-center gap-2">
+                  <i class="devicon-react-original colored text-lg"></i> React.js
+                </span>
+                <span class="skill-tag flex items-center gap-2">
+                  <i class="devicon-nodejs-plain colored text-lg"></i> Node.js
+                </span>
+                <span class="skill-tag flex items-center gap-2">
+                  <i class="devicon-express-original text-lg"></i> Express.js
+                </span>
+                <span class="skill-tag flex items-center gap-2">
+                  <i class="devicon-mongodb-plain colored text-lg"></i> MongoDB
+                </span>
+                <span class="skill-tag flex items-center gap-2">
+                  <i class="devicon-mysql-plain colored text-lg"></i> MySQL
+                </span>
+                <span class="skill-tag flex items-center gap-2">
+                  <i class="devicon-docker-plain colored text-lg"></i> Docker
+                </span>
+                <span class="skill-tag flex items-center gap-2">
+                  <i class="devicon-kubernetes-plain colored text-lg"></i> Kubernetes
+                </span>
+                <span class="skill-tag flex items-center gap-2">
+                  <i class="devicon-git-plain colored text-lg"></i> Git
+                </span>
               </div>
             </div>
             <h2 class="section-title text-xl font-bold mt-4">Featured</h2>
-            <div
-              class="mt-6 p-6 border rounded-lg shadow hover:shadow-md transition-shadow"
-            >
+            <div class="mt-6 p-6 border rounded-lg shadow hover:shadow-md transition-shadow">
               <div class="flex items-center space-x-4 mb-4">
-                <img
-                  src="assets/npm.png"
-                  alt="axios-react-hook"
-                  class="w-14 h-14 rounded border dark:border-gray-600"
-                />
                 <div>
-                  <a
-                    href="https://www.npmjs.com/package/axios-react-hook"
-                    target="_blank"
-                    class="text-xl font-bold flex items-center"
-                  >
+                  <a href="https://www.npmjs.com/package/axios-react-hook" target="_blank" class="text-xl font-bold flex items-center">
                     <i class="fab fa-npm mr-2 text-red-500"></i>
                     axios-react-hook
                   </a>
@@ -169,45 +131,21 @@
 
               <div class="text-sm mb-4">
                 <strong>Install:</strong>
-                <code class="px-2 py-1 rounded text-xs"
-                  >npm install axios-react-hook</code
-                >
+                <code class="px-2 py-1 rounded text-xs">npm install axios-react-hook</code>
               </div>
 
               <div class="flex flex-wrap gap-3 mb-4">
-                <img
-                  src="https://img.shields.io/npm/v/axios-react-hook?color=blue"
-                  alt="npm version"
-                />
-                <img
-                  src="https://img.shields.io/npm/dm/axios-react-hook"
-                  alt="monthly downloads"
-                />
-                <img
-                  src="https://img.shields.io/bundlephobia/minzip/axios-react-hook"
-                  alt="bundle size"
-                />
-                <img
-                  src="https://img.shields.io/npm/l/axios-react-hook"
-                  alt="license"
-                />
+                <img src="https://img.shields.io/npm/v/axios-react-hook?color=blue" alt="npm version" />
+                <img src="https://img.shields.io/npm/dm/axios-react-hook" alt="monthly downloads" />
+                <img src="https://img.shields.io/bundlephobia/minzip/axios-react-hook" alt="bundle size" />
+                <img src="https://img.shields.io/npm/l/axios-react-hook" alt="license" />
               </div>
 
               <div class="flex space-x-4 text-xl">
-                <a
-                  href="https://github.com/devmdrd/axios-react-hook"
-                  aria-label="GitHub"
-                  target="_blank"
-                  class="connect-icon"
-                >
+                <a href="https://github.com/devmdrd/axios-react-hook" aria-label="GitHub" target="_blank" class="connect-icon">
                   <i class="fab fa-github"></i>
                 </a>
-                <a
-                  href="https://www.npmjs.com/package/axios-react-hook"
-                  aria-label="npm"
-                  target="_blank"
-                  class="connect-icon"
-                >
+                <a href="https://www.npmjs.com/package/axios-react-hook" aria-label="npm" target="_blank" class="connect-icon">
                   <i class="fab fa-npm"></i>
                 </a>
               </div>
@@ -222,19 +160,13 @@
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="pl-6">
-                <div
-                  class="flex flex-col md:flex-row md:justify-between md:items-center mb-2"
-                >
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
                   <h3 class="text-lg font-bold">Junior Software Engineer</h3>
                   <span>June 2024 – Present</span>
                 </div>
                 <div class="flex items-center mb-3">
                   <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
-                    <img
-                      src="assets/junkies.jpg"
-                      alt="Junkies Coder"
-                      class="w-full h-full object-cover"
-                    />
+                    <img src="assets/junkies.jpg" alt="Junkies Coder" class="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h4 class="font-semibold">Junkies Coder</h4>
@@ -269,21 +201,13 @@
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="pl-6">
-                <div
-                  class="flex flex-col md:flex-row md:justify-between md:items-center mb-2"
-                >
-                  <h3 class="text-lg font-bold">
-                    MERN Stack Developer Trainee
-                  </h3>
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
+                  <h3 class="text-lg font-bold">MERN Stack Developer Trainee</h3>
                   <span>June 2023 – May 2024</span>
                 </div>
                 <div class="flex items-center mb-3">
                   <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
-                    <img
-                      src="assets/brototype.png"
-                      alt="Brototype"
-                      class="w-full h-full object-cover"
-                    />
+                    <img src="assets/brototype.png" alt="Brototype" class="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h4 class="font-semibold">Brototype</h4>
@@ -312,112 +236,76 @@
           <div class="mb-12">
             <h2 class="text-2xl font-bold mb-6">Projects</h2>
             <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-8">
-              <div
-                class="border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
-              >
+              <div class="border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <div class="relative group">
-                  <img
-                    src="assets/talenttrove.png"
-                    alt="TalentTrove"
-                    class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div
-                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-sm text-center p-4"
-                  >
+                  <img src="assets/talenttrove.png" alt="TalentTrove" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" />
+                  <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-sm text-center p-4">
                     A comprehensive job portal with role-based dashboards and
                     real-time communication.
                   </div>
                 </div>
                 <div class="p-5">
-                  <h3 class="text-lg font-semibold mb-2">
-                    TalentTrove – Online Job Portal
-                  </h3>
+                  <h3 class="text-lg font-semibold mb-2">TalentTrove – Online Job Portal</h3>
                   <div class="flex flex-wrap gap-2 text-sm mb-3">
-                    <span class="skill-tag"
-                      ><i class="fab fa-react"></i> React</span
-                    >
-                    <span class="skill-tag"
-                      ><i class="fab fa-node-js"></i> Node.js</span
-                    >
-                    <span class="skill-tag"
-                      ><i class="fas fa-leaf"></i> MongoDB</span
-                    >
-                    <span class="skill-tag"
-                      ><i class="fas fa-plug"></i> Socket.IO</span
-                    >
-                    <span class="skill-tag"
-                      ><i class="fas fa-unlock-alt"></i> OAuth</span
-                    >
+                      <span class="skill-tag flex items-center gap-1">
+                        <i class="devicon-react-original colored text-base"></i> React
+                      </span>
+                      <span class="skill-tag flex items-center gap-1">
+                        <i class="devicon-nodejs-plain colored text-base"></i> Node.js
+                      </span>
+                      <span class="skill-tag flex items-center gap-1">
+                        <i class="devicon-mongodb-plain colored text-base"></i> MongoDB
+                      </span>
+                      <span class="skill-tag flex items-center gap-1">
+                        <i class="devicon-socketio-original text-base"></i> Socket.IO
+                      </span>
+                      <span class="skill-tag flex items-center gap-1">
+                        <i class="devicon-oauth-plain text-base"></i> OAuth
+                      </span>
                   </div>
                   <div class="flex space-x-4 text-xl text-gray-700">
-                    <a
-                      href="https://github.com/devmdrd/TalentTrove"
-                      class="connect-icon"
-                      aria-label="GitHub"
-                    >
+                    <a href="https://github.com/devmdrd/TalentTrove" class="connect-icon" aria-label="GitHub">
                       <i class="fab fa-github"></i>
                     </a>
-                    <a
-                      href="https://talenttrove.online/"
-                      class="connect-icon"
-                      aria-label="Live Demo"
-                    >
+                    <a href="https://talenttrove.online/" class="connect-icon" aria-label="Live Demo">
                       <i class="fas fa-up-right-from-square"></i>
                     </a>
                   </div>
                 </div>
               </div>
 
-              <div
-                class="border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
-              >
+              <div class="border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <div class="relative group">
-                  <img
-                    src="assets/ecart.png"
-                    alt="E-Cart"
-                    class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div
-                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-sm text-center p-4"
-                  >
+                  <img src="assets/ecart.png" alt="E-Cart" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" />
+                  <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-sm text-center p-4">
                     A full-featured e-commerce platform with payment and admin
                     features.
                   </div>
                 </div>
                 <div class="p-5">
-                  <h3 class="text-lg font-semibold mb-2">
-                    E-Cart – E-commerce Platform
-                  </h3>
+                  <h3 class="text-lg font-semibold mb-2">E-Cart – E-commerce Platform</h3>
                   <div class="flex flex-wrap gap-2 text-sm mb-3">
-                    <span class="skill-tag"
-                      ><i class="fab fa-node-js"></i> Node.js</span
-                    >
-                    <span class="skill-tag"
-                      ><i class="fas fa-server"></i> Express.js</span
-                    >
-                    <span class="skill-tag"
-                      ><i class="fas fa-leaf"></i> MongoDB</span
-                    >
-                    <span class="skill-tag"
-                      ><i class="fas fa-code"></i> EJS</span
-                    >
-                    <span class="skill-tag"
-                      ><i class="fab fa-cc-stripe"></i> Stripe</span
-                    >
+                    <span class="skill-tag flex items-center gap-1">
+                      <i class="devicon-nodejs-plain colored text-base"></i> Node.js
+                    </span>
+                    <span class="skill-tag flex items-center gap-1">
+                      <i class="devicon-express-original text-base"></i> Express.js
+                    </span>
+                    <span class="skill-tag flex items-center gap-1">
+                      <i class="devicon-mongodb-plain colored text-base"></i> MongoDB
+                    </span>
+                    <span class="skill-tag">
+                      <i class="fas fa-code"></i> EJS
+                    </span>
+                    <span class="skill-tag">
+                      <i class="fab fa-cc-stripe"></i> Stripe
+                    </span>
                   </div>
                   <div class="flex space-x-4 text-xl text-gray-700">
-                    <a
-                      href="https://github.com/devmdrd/ecart"
-                      class="connect-icon"
-                      aria-label="GitHub"
-                    >
+                    <a href="https://github.com/devmdrd/ecart" class="connect-icon" aria-label="GitHub">
                       <i class="fab fa-github"></i>
                     </a>
-                    <a
-                      href="https://ecart.in.net/"
-                      class="connect-icon"
-                      aria-label="Live Demo"
-                    >
+                    <a href="https://ecart.in.net/" class="connect-icon" aria-label="Live Demo">
                       <i class="fas fa-up-right-from-square"></i>
                     </a>
                   </div>
@@ -432,26 +320,16 @@
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="pl-6">
-                <div
-                  class="flex flex-col md:flex-row md:justify-between md:items-center mb-2"
-                >
-                  <h3 class="text-lg font-bold">
-                    Bachelor of Computer Applications (BCA)
-                  </h3>
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
+                  <h3 class="text-lg font-bold">Bachelor of Computer Applications (BCA)</h3>
                   <span>2020 – 2023</span>
                 </div>
                 <div class="flex items-center mb-3">
                   <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
-                    <img
-                      src="assets/college.png"
-                      alt="Santhigiri College"
-                      class="w-full h-full object-cover"
-                    />
+                    <img src="assets/college.png" alt="Santhigiri College" class="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <h4 class="font-semibold">
-                      Santhigiri College of Computer Sciences
-                    </h4>
+                    <h4 class="font-semibold">Santhigiri College of Computer Sciences</h4>
                     <p class="text-sm">Mahatma Gandhi University (MGU)</p>
                   </div>
                 </div>
@@ -461,30 +339,17 @@
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="pl-6">
-                <div
-                  class="flex flex-col md:flex-row md:justify-between md:items-center mb-2"
-                >
-                  <h3 class="text-lg font-bold">
-                    Higher Secondary Education (Computer Science)
-                  </h3>
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
+                  <h3 class="text-lg font-bold">Higher Secondary Education (Computer Science)</h3>
                   <span>2018 – 2020</span>
                 </div>
                 <div class="flex items-center mb-3">
                   <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
-                    <img
-                      src="assets/hss.jpg"
-                      alt="St. George's HSS"
-                      class="w-full h-full object-cover"
-                    />
+                    <img src="assets/hss.jpg" alt="St. George's HSS" class="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <h4 class="font-semibold">
-                      St. George's Higher Secondary School
-                    </h4>
-                    <p class="text-sm">
-                      Kerala State Board of Higher Secondary Education (DHSE
-                      Kerala)
-                    </p>
+                    <h4 class="font-semibold">St. George's Higher Secondary School</h4>
+                    <p class="text-sm">Kerala State Board of Higher Secondary Education (DHSE Kerala)</p>
                   </div>
                 </div>
               </div>
@@ -493,25 +358,17 @@
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="pl-6">
-                <div
-                  class="flex flex-col md:flex-row md:justify-between md:items-center mb-2"
-                >
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
                   <h3 class="text-lg font-bold">Secondary Education</h3>
                   <span>2017 – 2018</span>
                 </div>
                 <div class="flex items-center mb-3">
                   <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
-                    <img
-                      src="assets/cbse.png"
-                      alt="Al-Azhar Public School"
-                      class="w-full h-full object-cover"
-                    />
+                    <img src="assets/cbse.png" alt="Al-Azhar Public School" class="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h4 class="font-semibold">Al-Azhar Public School</h4>
-                    <p class="text-sm">
-                      Central Board of Secondary Education (CBSE)
-                    </p>
+                    <p class="text-sm">Central Board of Secondary Education (CBSE)</p>
                   </div>
                 </div>
               </div>
@@ -523,66 +380,29 @@
             <form id="contactFormDesktop" class="space-y-4">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <input
-                    type="text"
-                    id="nameDesktop"
-                    name="name"
-                    placeholder="Your Name"
-                    class="contact-input w-full"
-                    required
-                  />
+                  <input type="text" id="nameDesktop" name="name" placeholder="Your Name" class="contact-input w-full" required />
                 </div>
                 <div>
-                  <input
-                    type="email"
-                    id="emailDesktop"
-                    name="email"
-                    placeholder="Your Email"
-                    class="contact-input w-full"
-                    required
-                  />
+                  <input type="email" id="emailDesktop" name="email" placeholder="Your Email" class="contact-input w-full" required />
                 </div>
               </div>
               <div>
-                <input
-                  type="text"
-                  id="subjectDesktop"
-                  name="subject"
-                  placeholder="Subject"
-                  class="contact-input w-full"
-                  required
-                />
+                <input type="text" id="subjectDesktop" name="subject" placeholder="Subject" class="contact-input w-full" required />
               </div>
               <div>
-                <textarea
-                  id="messageDesktop"
-                  name="message"
-                  rows="4"
-                  placeholder="Your Message"
-                  class="contact-input w-full"
-                  required
-                ></textarea>
+                <textarea id="messageDesktop" name="message" rows="4" placeholder="Your Message" class="contact-input w-full" required></textarea>
               </div>
-              <button
-                type="submit"
-                class="px-6 py-2 btn-primary rounded-full hover:opacity-90 transition flex items-center justify-center"
-              >
+              <button type="submit" class="px-6 py-2 btn-primary rounded-full hover:opacity-90 transition flex items-center justify-center">
                 <span id="submitText">Send Message</span>
                 <span id="submitSpinner" class="hidden ml-2">
                   <i class="fas fa-spinner fa-spin"></i>
                 </span>
               </button>
             </form>
-            <div
-              id="formSuccessDesktop"
-              class="hidden mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-lg"
-            >
+            <div id="formSuccessDesktop" class="hidden mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-lg">
               Your message has been sent successfully!
             </div>
-            <div
-              id="formErrorDesktop"
-              class="hidden mt-4 p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-lg"
-            >
+            <div id="formErrorDesktop" class="hidden mt-4 p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-lg">
               There was an error sending your message. Please try again.
             </div>
           </div>
@@ -593,36 +413,16 @@
     <footer class="py-6 mt-8">
       <div class="container mx-auto px-4 text-center">
         <div class="flex justify-center space-x-6 mb-4">
-          <a
-            href="https://github.com/devmdrd"
-            target="_blank"
-            class="connect-icon"
-            title="GitHub"
-          >
+          <a href="https://github.com/devmdrd" target="_blank" class="connect-icon" title="GitHub">
             <i class="fab fa-github"></i>
           </a>
-          <a
-            href="https://linkedin.com/in/devmdrd"
-            target="_blank"
-            class="connect-icon"
-            title="LinkedIn"
-          >
+          <a href="https://linkedin.com/in/devmdrd" target="_blank" class="connect-icon" title="LinkedIn">
             <i class="fab fa-linkedin-in"></i>
           </a>
-          <a
-            href="https://twitter.com/devmdrd"
-            target="_blank"
-            class="connect-icon"
-            title="Twitter"
-          >
+          <a href="https://twitter.com/devmdrd" target="_blank" class="connect-icon" title="Twitter">
             <i class="fab fa-twitter"></i>
           </a>
-          <a
-            href="https://leetcode.com/devmdrd"
-            target="_blank"
-            class="connect-icon"
-            title="LeetCode"
-          >
+          <a href="https://leetcode.com/devmdrd" target="_blank" class="connect-icon" title="LeetCode">
             <i class="fas fa-code"></i>
           </a>
         </div>

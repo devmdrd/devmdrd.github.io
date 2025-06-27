@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
   setTimeout(function () {
-    document.querySelector(".loading-screen").style.opacity = "0";
-    setTimeout(function () {
-      document.querySelector(".loading-screen").style.display = "none";
-    }, 500);
+    const loadingScreen = document.querySelector(".loading-screen");
+    if (loadingScreen) {
+      loadingScreen.style.opacity = "0";
+      setTimeout(() => loadingScreen.remove(), 500);
+    }
   }, 1500);
 
   const themeToggle = document.getElementById("themeToggle");
@@ -18,13 +19,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
       html.classList.add("dark");
-      themeIcon.classList.remove("fa-moon");
-      themeIcon.classList.add("fa-sun");
+      themeIcon.classList.replace("fa-moon", "fa-sun");
       localStorage.setItem("theme", "dark");
     } else {
       html.classList.remove("dark");
-      themeIcon.classList.remove("fa-sun");
-      themeIcon.classList.add("fa-moon");
+      themeIcon.classList.replace("fa-sun", "fa-moon");
       localStorage.setItem("theme", "light");
     }
   }
@@ -34,14 +33,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const isDark = html.classList.contains("dark");
 
     if (isDark) {
-      themeIcon.classList.remove("fa-moon");
-      themeIcon.classList.add("fa-sun");
+      themeIcon.classList.replace("fa-moon", "fa-sun");
       localStorage.setItem("theme", "dark");
     } else {
-      themeIcon.classList.remove("fa-sun");
-      themeIcon.classList.add("fa-moon");
+      themeIcon.classList.replace("fa-sun", "fa-moon");
       localStorage.setItem("theme", "light");
     }
+
+    updateSceneColors();
   });
 
   initTheme();
@@ -71,108 +70,218 @@ document.addEventListener("DOMContentLoaded", function () {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x000000, 0);
-  document.getElementById("particles-js").appendChild(renderer.domElement);
+  let scene, camera, renderer, wireframe, glow, particleMesh;
+  let animationId;
 
-  function getParticleColor() {
+  function initThreeJS() {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+
+    renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      antialias: true,
+      powerPreference: "high-performance",
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    document.getElementById("three-container").appendChild(renderer.domElement);
+
+    createObjects();
+    camera.position.z = 5;
+
+    window.addEventListener("resize", onWindowResize);
+    animate();
+  }
+
+  function createObjects() {
+    const geometry = new THREE.TorusGeometry(1.5, 0.5, 16, 100);
+    const edges = new THREE.EdgesGeometry(geometry);
+    const material = new THREE.LineBasicMaterial({
+      color: getWireColor(),
+      transparent: true,
+      opacity: 0.8,
+    });
+
+    wireframe = new THREE.LineSegments(edges, material);
+    scene.add(wireframe);
+
+    const glowGeometry = new THREE.TorusGeometry(1.52, 0.52, 32, 100);
+    const glowMaterial = new THREE.MeshBasicMaterial({
+      color: getGlowColor(),
+      transparent: true,
+      opacity: 0.15,
+      blending: THREE.AdditiveBlending,
+    });
+
+    glow = new THREE.Mesh(glowGeometry, glowMaterial);
+    scene.add(glow);
+
+    const particles = new THREE.BufferGeometry();
+    const particleCount = 100;
+    const posArray = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount * 3; i++) {
+      posArray[i] = (Math.random() - 0.5) * 3;
+    }
+
+    particles.setAttribute("position", new THREE.BufferAttribute(posArray, 3));
+    const particleMaterial = new THREE.PointsMaterial({
+      size: 0.03,
+      color: getWireColor(),
+      transparent: true,
+      opacity: 0.6,
+    });
+
+    particleMesh = new THREE.Points(particles, particleMaterial);
+    scene.add(particleMesh);
+  }
+
+  function getWireColor() {
     return html.classList.contains("dark") ? 0xffffff : 0x000000;
   }
 
-  const particlesGeometry = new THREE.BufferGeometry();
-  const particlesCount = 1500;
-  const posArray = new Float32Array(particlesCount * 3);
-
-  for (let i = 0; i < particlesCount * 3; i++) {
-    posArray[i] = (Math.random() - 0.5) * 10;
+  function getGlowColor() {
+    return html.classList.contains("dark") ? 0xffffff : 0x000000;
   }
 
-  particlesGeometry.setAttribute(
-    "position",
-    new THREE.BufferAttribute(posArray, 3)
-  );
-  const particlesMaterial = new THREE.PointsMaterial({
-    size: 0.02,
-    color: getParticleColor(),
-    transparent: true,
-    opacity: 0.8,
-  });
-
-  const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-  scene.add(particlesMesh);
-
-  camera.position.z = 3;
-
-  function animate() {
-    requestAnimationFrame(animate);
-    particlesMesh.rotation.x += 0.0005;
-    particlesMesh.rotation.y += 0.0005;
-    renderer.render(scene, camera);
+  function updateSceneColors() {
+    if (wireframe && wireframe.material) {
+      wireframe.material.color.setHex(getWireColor());
+    }
+    if (glow && glow.material) {
+      glow.material.color.setHex(getGlowColor());
+    }
+    if (particleMesh && particleMesh.material) {
+      particleMesh.material.color.setHex(getWireColor());
+    }
   }
 
-  animate();
-
-  window.addEventListener("resize", function () {
+  function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-  });
+  }
 
-  themeToggle.addEventListener("click", function () {
-    particlesMaterial.color.setHex(getParticleColor());
-  });
+  let time = 0;
+  function animate() {
+    animationId = requestAnimationFrame(animate);
+
+    time += 0.005;
+
+    if (wireframe) {
+      wireframe.rotation.x = time * 0.5;
+      wireframe.rotation.y = time * 0.8;
+    }
+    if (glow) {
+      glow.rotation.x = time * 0.5;
+      glow.rotation.y = time * 0.8;
+      glow.scale.setScalar(1 + Math.sin(time * 2) * 0.03);
+    }
+
+    if (particleMesh && particleMesh.geometry) {
+      const positions = particleMesh.geometry.attributes.position.array;
+      for (let i = 0; i < positions.length; i += 3) {
+        positions[i] *= 0.99;
+        positions[i + 1] *= 0.99;
+        positions[i + 2] *= 0.99;
+
+        if (Math.random() < 0.02) {
+          positions[i] = (Math.random() - 0.5) * 3;
+          positions[i + 1] = (Math.random() - 0.5) * 3;
+          positions[i + 2] = (Math.random() - 0.5) * 3;
+        }
+      }
+      particleMesh.geometry.attributes.position.needsUpdate = true;
+    }
+
+    renderer.render(scene, camera);
+  }
+
+  function cleanupThreeJS() {
+    cancelAnimationFrame(animationId);
+    window.removeEventListener("resize", onWindowResize);
+
+    if (renderer) {
+      renderer.dispose();
+      const container = document.getElementById("three-container");
+      if (container && container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
+      }
+    }
+
+    [wireframe, glow, particleMesh].forEach((obj) => {
+      if (obj) {
+        if (obj.geometry) obj.geometry.dispose();
+        if (obj.material) {
+          if (Array.isArray(obj.material)) {
+            obj.material.forEach((m) => m.dispose());
+          } else {
+            obj.material.dispose();
+          }
+        }
+      }
+    });
+  }
+
+  initThreeJS();
 
   const form = document.getElementById("contactFormDesktop");
-  const success = document.getElementById("formSuccessDesktop");
-  const error = document.getElementById("formErrorDesktop");
-  const submitText = document.getElementById("submitText");
-  const submitSpinner = document.getElementById("submitSpinner");
+  if (form) {
+    const success = document.getElementById("formSuccessDesktop");
+    const error = document.getElementById("formErrorDesktop");
+    const submitText = document.getElementById("submitText");
+    const submitSpinner = document.getElementById("submitSpinner");
 
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault();
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
 
-    success.classList.add("hidden");
-    error.classList.add("hidden");
-    submitText.textContent = "Sending...";
-    submitSpinner.classList.remove("hidden");
+      success?.classList.add("hidden");
+      error?.classList.add("hidden");
+      if (submitText) submitText.textContent = "Sending...";
+      if (submitSpinner) submitSpinner.classList.remove("hidden");
 
-    try {
-      const formData = new FormData(form);
-      const response = await fetch("https://formspree.io/f/mnnvvnwp", {
-        method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
-      });
+      try {
+        const formData = new FormData(form);
+        const response = await fetch("https://formspree.io/f/mnnvvnwp", {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        });
 
-      if (response.ok) {
-        form.reset();
-        success.classList.remove("hidden");
-        setTimeout(() => success.classList.add("hidden"), 5000);
-      } else {
-        const errorData = await response.json();
-        if (errorData.errors) {
-          error.textContent = errorData.errors
-            .map((err) => err.message)
-            .join(", ");
+        if (response.ok) {
+          form.reset();
+          success?.classList.remove("hidden");
+          setTimeout(() => success?.classList.add("hidden"), 5000);
+        } else {
+          const errorData = await response.json();
+          if (error && errorData.errors) {
+            error.textContent = errorData.errors
+              .map((err) => err.message)
+              .join(", ");
+          }
+          error?.classList.remove("hidden");
+          setTimeout(() => error?.classList.add("hidden"), 5000);
         }
-        error.classList.remove("hidden");
-        setTimeout(() => error.classList.add("hidden"), 5000);
+      } catch (err) {
+        if (error) {
+          error.textContent = "Network error. Please try again later.";
+          error.classList.remove("hidden");
+          setTimeout(() => error.classList.add("hidden"), 5000);
+        }
+      } finally {
+        if (submitText) submitText.textContent = "Send Message";
+        if (submitSpinner) submitSpinner.classList.add("hidden");
       }
-    } catch (err) {
-      error.textContent = "Network error. Please try again later.";
-      error.classList.remove("hidden");
-      setTimeout(() => error.classList.add("hidden"), 5000);
-    } finally {
-      submitText.textContent = "Send Message";
-      submitSpinner.classList.add("hidden");
-    }
-  });
+    });
+  }
+
+  window.addEventListener("beforeunload", cleanupThreeJS);
 });

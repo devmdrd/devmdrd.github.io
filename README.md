@@ -34,7 +34,6 @@ Welcome to my personal portfolio website. This project showcases my skills, proj
      ├── ecart.png
      ├── hss.jpg
      ├── junkies.jpg
-     ├── npm.png
      ├── profile.jpg
      ├── resume.pdf
      └── talenttrove.png
@@ -85,7 +84,3 @@ Feel free to connect with me:
 - 🐱 GitHub: [devmdrd](https://github.com/devmdrd)
 
 ---
-
-## 📝 License
-
-This project is open-source and free to use under the [MIT License](LICENSE).

@@ -2,7 +2,7 @@ body {
   color: #000;
   background-color: #fff;
   margin: 0;
-  font-family: sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .dark body {
   color: #fff;
@@ -34,16 +34,14 @@ body {
     transform: rotate(360deg);
   }
 }
-#particles-js {
+#three-container {
   position: fixed;
-  width: 100%;
-  height: 100%;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
   z-index: -1;
-}
-#particles-js canvas {
-  display: block !important;
+  opacity: 0.3;
 }
 .back-to-top {
   position: fixed;
@@ -97,16 +95,13 @@ body {
 }
 .skill-tag {
   display: inline-block;
-  background-color: #f0f0f0;
-  color: #000;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
-  margin: 0 0.5rem 0.5rem 0;
   font-size: 0.875rem;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 .dark .skill-tag {
-  background-color: #333;
-  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 .section-title {
   border-bottom: 2px solid #ddd;
@@ -122,6 +117,7 @@ body {
   border-bottom: 2px solid #ddd;
   padding: 0.5rem 0;
   transition: border-color 0.3s;
+  width: 100%;
 }
 .contact-input:focus {
   outline: none;
@@ -129,6 +125,7 @@ body {
 }
 .dark .contact-input {
   border-bottom-color: #444;
+  color: white;
 }
 .dark .contact-input:focus {
   border-bottom-color: #fff;
@@ -185,6 +182,8 @@ body {
   top: 20px;
   right: 20px;
   z-index: 50;
+  border: none;
+  cursor: pointer;
 }
 .dark .theme-toggle {
   background-color: #333;
