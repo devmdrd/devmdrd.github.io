@@ -13,9 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function initTheme() {
     const savedTheme = localStorage.getItem("theme");
-    const systemPrefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
     if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
       html.classList.add("dark");
@@ -46,11 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initTheme();
 
   const typed = new Typed("#typed-text", {
-    strings: [
-      "Software Engineer",
-      "Full Stack Developer",
-      "MERN Stack Developer",
-    ],
+    strings: ["Software Engineer", "Full Stack Developer", "MERN Stack Developer"],
     typeSpeed: 50,
     backSpeed: 30,
     loop: true,
@@ -75,12 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function initThreeJS() {
     scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
     renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -147,61 +136,6 @@ document.addEventListener("DOMContentLoaded", function () {
     scene.add(particleMesh);
   }
 
-  function onWindowResize() {
-    const isMobile = window.innerWidth <= 768;
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.position.z = isMobile ? 7 : 5;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
-    
-    cleanupThreeJS();
-    initThreeJS();
-  }
-
-  function createObjects() {
-    const geometry = new THREE.TorusGeometry(1.5, 0.5, 16, 100);
-    const edges = new THREE.EdgesGeometry(geometry);
-    const material = new THREE.LineBasicMaterial({
-      color: getWireColor(),
-      transparent: true,
-      opacity: 0.8,
-    });
-
-    wireframe = new THREE.LineSegments(edges, material);
-    scene.add(wireframe);
-
-    const glowGeometry = new THREE.TorusGeometry(1.52, 0.52, 32, 100);
-    const glowMaterial = new THREE.MeshBasicMaterial({
-      color: getGlowColor(),
-      transparent: true,
-      opacity: 0.15,
-      blending: THREE.AdditiveBlending,
-    });
-
-    glow = new THREE.Mesh(glowGeometry, glowMaterial);
-    scene.add(glow);
-
-    const particles = new THREE.BufferGeometry();
-    const particleCount = 100;
-    const posArray = new Float32Array(particleCount * 3);
-
-    for (let i = 0; i < particleCount * 3; i++) {
-      posArray[i] = (Math.random() - 0.5) * 3;
-    }
-
-    particles.setAttribute("position", new THREE.BufferAttribute(posArray, 3));
-    const particleMaterial = new THREE.PointsMaterial({
-      size: 0.03,
-      color: getWireColor(),
-      transparent: true,
-      opacity: 0.6,
-    });
-
-    particleMesh = new THREE.Points(particles, particleMaterial);
-    scene.add(particleMesh);
-  }
-
   function getWireColor() {
     return html.classList.contains("dark") ? 0xffffff : 0x000000;
   }
@@ -223,9 +157,15 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function onWindowResize() {
+    const isMobile = window.innerWidth <= 768;
     camera.aspect = window.innerWidth / window.innerHeight;
+    camera.position.z = isMobile ? 7 : 5;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
+    
+    cleanupThreeJS();
+    initThreeJS();
   }
 
   let time = 0;
@@ -324,9 +264,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
           const errorData = await response.json();
           if (error && errorData.errors) {
-            error.textContent = errorData.errors
-              .map((err) => err.message)
-              .join(", ");
+            error.textContent = errorData.errors.map((err) => err.message).join(", ");
           }
           error?.classList.remove("hidden");
           setTimeout(() => error?.classList.add("hidden"), 5000);
