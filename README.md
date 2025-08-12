@@ -4,7 +4,7 @@ A modern, responsive personal portfolio website to showcase my skills, experienc
 
 ## 🌐 Live Demo
 
-[🔗 View Portfolio](https://devmdrd.github.io/)
+[🔗 View Portfolio](https://muhammedrashid.tech/)
 
 ## ✨ Features
 
