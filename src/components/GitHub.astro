@@ -1,0 +1,101 @@
+---
+---
+
+<section id="github" class="snap-section snap-section--centered github-mobile-section">
+  <div class="snap-body">
+
+    <h2 class="section-title"><i class="fa-brands fa-github"></i>github</h2>
+
+    <div class="gh-m-inner">
+
+      <h3 class="gh-m-sub"><i class="fa-solid fa-gauge-high"></i>overview</h3>
+      <div id="gh-stats-m">
+        <div class="stats-grid stats-grid--sm">
+          <div class="stat-card">
+            <div class="stat-card__value" data-stat="contributions"><span class="sk sk--inline"></span></div>
+            <div class="stat-card__label">Contributions</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__value" data-stat="followers"><span class="sk sk--inline"></span></div>
+            <div class="stat-card__label">Followers</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__value" data-stat="repos"><span class="sk sk--inline"></span></div>
+            <div class="stat-card__label">Repos</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="gh-m-sub"><i class="fa-solid fa-fire"></i>streak</h3>
+      <div id="gh-streak-m">
+        <div class="streak-grid">
+          <div class="streak-cell">
+            <i class="fa-solid fa-chart-line"></i>
+            <div class="streak-cell__value" data-streak="total"><span class="sk sk--inline"></span></div>
+            <div class="streak-cell__label">Total</div>
+          </div>
+          <div class="streak-cell">
+            <i class="fa-solid fa-fire"></i>
+            <div class="streak-cell__value" data-streak="current"><span class="sk sk--inline"></span></div>
+            <div class="streak-cell__label">Current</div>
+          </div>
+          <div class="streak-cell">
+            <i class="fa-solid fa-trophy"></i>
+            <div class="streak-cell__value" data-streak="longest"><span class="sk sk--inline"></span></div>
+            <div class="streak-cell__label">Longest</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="gh-m-sub"><i class="fa-solid fa-code"></i>top languages</h3>
+      <div id="gh-langs-m">
+        <div id="langs-sk-m" class="lang-sk">
+          <div class="sk lang-sk__bar"></div>
+          <div class="lang-sk__labels">
+            <div class="lang-sk__label"><div class="sk lang-sk__dot"></div><div class="sk lang-sk__name"></div></div>
+            <div class="lang-sk__label"><div class="sk lang-sk__dot"></div><div class="sk lang-sk__name"></div></div>
+            <div class="lang-sk__label"><div class="sk lang-sk__dot"></div><div class="sk lang-sk__name"></div></div>
+            <div class="lang-sk__label"><div class="sk lang-sk__dot"></div><div class="sk lang-sk__name"></div></div>
+          </div>
+        </div>
+        <div class="langs-list" id="langs-list-m" hidden></div>
+      </div>
+
+      <div class="gh-m-sub--row">
+        <h3 class="gh-m-sub"><i class="fa-solid fa-calendar-check"></i>contributions</h3>
+        <span id="contrib-year-wrap-m"></span>
+      </div>
+      <div id="gh-contrib-m" class="contrib-chart">
+        <div id="contrib-sk-m" class="sk sk--contrib"></div>
+        <div id="contrib-content-m" hidden>
+          <div class="contrib-chart__scroll">
+            <div id="contrib-inner-m">
+              <div class="contrib-chart__month-row">
+                <div class="contrib-chart__day-spacer"></div>
+                <div class="contrib-chart__month-labels" id="contrib-months-m"></div>
+              </div>
+              <div class="contrib-chart__body">
+                <div class="contrib-chart__day-labels" id="contrib-days-m"></div>
+                <div class="contrib-grid" role="img" id="contrib-grid-m" aria-label="GitHub contribution activity chart"></div>
+              </div>
+            </div>
+          </div>
+          <div class="contrib-tooltip" id="contrib-tooltip-m" role="tooltip"></div>
+          <div class="contrib-legend" id="contrib-legend-m" aria-hidden="true">
+            <span class="legend-less">Less</span>
+            <span class="legend-more">More</span>
+          </div>
+        </div>
+      </div>
+
+      <a href="https://github.com/devmdrd?tab=repositories"
+         target="_blank" rel="noreferrer"
+         class="outline-btn gh-m-all-repos"
+         aria-label="View all repositories on GitHub">
+        <i class="fa-brands fa-github"></i>view all repositories
+      </a>
+
+    </div>
+
+  </div>
+</section>

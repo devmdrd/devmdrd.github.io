@@ -1,0 +1,168 @@
+---
+interface ExpItem {
+  current:  boolean;
+  role:     string;
+  type:     string;
+  period:   string;
+  location: string;
+  bullets:  string[];
+  tags:     string[];
+  mono:     string;
+  company:  string;
+}
+
+const EXP_DATA: ExpItem[] = [
+  {
+    current:  true,
+    role:     'Full Stack Developer',
+    type:     'Full-time · Remote',
+    period:   'Jul 2025 – Present',
+    location: 'Amsterdam, NL',
+    mono:     'W',
+    company:  'Whydonate',
+    bullets: [
+      'Contributed to a live crowdfunding platform used by NGOs across multiple European countries',
+      'Refactored Angular application layouts by migrating from Angular Flex Layout to Tailwind CSS, enhancing responsiveness and maintainability',
+      'Built reusable Angular and Tailwind CSS components adopted across the platform to ensure UI consistency',
+      'Integrated REST APIs and resolved frontend usability issues, improving application functionality and user experience',
+      'Collaborated with cross-functional remote teams in an Agile/Scrum environment, participating in sprint planning and feature delivery',
+    ],
+    tags: ['Angular', 'Tailwind CSS', 'TypeScript', 'Node.js', 'Git'],
+  },
+  {
+    current:  false,
+    role:     'Full Stack Developer',
+    type:     'Full-time · Remote',
+    period:   'Feb 2024 – May 2025',
+    location: 'Ahmedabad, India',
+    mono:     'JC',
+    company:  'Junkies Coder',
+    bullets: [
+      'Designed and developed scalable RESTful APIs using Node.js and Express.js, improving application performance and reducing response latency by 25%',
+      'Integrated secure third-party services including payment gateways, cloud storage, email services, and OTP-based authentication',
+      'Diagnosed and resolved critical production issues, enhancing system reliability and reducing downtime by 30%',
+      'Collaborated with cross-functional teams to deliver backend features and support seamless frontend integrations',
+      'Contributed to Agile development processes through sprint planning, daily stand-ups, retrospectives, and on-time feature delivery',
+    ],
+    tags: ['React', 'Redux', 'Node.js', 'Express', 'MongoDB', 'Git'],
+  },
+  {
+    current:  false,
+    role:     'Full Stack Developer Trainee',
+    type:     'Full-time · On-site',
+    period:   'Jun 2023 – Feb 2024',
+    location: 'Trivandrum, India',
+    mono:     'B',
+    company:  'Brototype',
+    bullets: [
+      'Completed intensive training in the MERN stack, covering MongoDB, Express.js, React, and Node.js',
+      'Built full-stack web applications including an e-commerce platform and a social networking application',
+      'Implemented user authentication, authorization, REST APIs, and database integrations in real-world projects',
+      'Gained hands-on experience with Git, version control workflows, debugging, and application deployment',
+      'Learned Agile development practices, participating in sprint planning, task management, and collaborative coding exercises',
+    ],
+    tags: ['MongoDB', 'Express', 'React', 'Node.js', 'JavaScript', 'Git'],
+  },
+];
+
+function calcDuration(period: string): string {
+  const MONTHS: Record<string, number> = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+  const parts = period.split('–').map(s => s.trim());
+  const s     = parts[0].split(' ');
+  const start = new Date(Number(s[1]), MONTHS[s[0]]);
+  const end   = parts[1] === 'Present' ? new Date() : (() => { const e = parts[1].split(' '); return new Date(Number(e[1]), MONTHS[e[0]]); })();
+  const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+  const yrs = Math.floor(months / 12);
+  const mos = months % 12;
+  if (yrs === 0) return `${mos} mos`;
+  if (mos === 0) return `${yrs} yr${yrs !== 1 ? 's' : ''}`;
+  return `${yrs} yr${yrs !== 1 ? 's' : ''} ${mos} mos`;
+}
+---
+
+<section id="experience" class="snap-section snap-section--centered">
+  <div class="snap-body">
+
+    <h2 class="section-title"><i class="fa-solid fa-briefcase"></i>work experience</h2>
+
+    <div class="exp-split">
+      <div class="exp-split__list" role="tablist">
+        {EXP_DATA.map((exp, i) => (
+          <button
+            class={`exp-tab${i === 0 ? ' active' : ''}`}
+            data-idx={i}
+            role="tab"
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+            aria-controls="exp-detail"
+            id={`exp-tab-${i}`}
+          >
+            <span class={`exp-tab__mono${i === 0 ? ' active' : ''}`}>{exp.mono}</span>
+            <div class="exp-tab__text">
+              <span class="exp-tab__co">{exp.company}</span>
+              <span class="exp-tab__date">{calcDuration(exp.period)}</span>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      <div class="exp-split__detail" id="exp-detail" role="tabpanel" tabindex="0" aria-labelledby="exp-tab-0">
+        {EXP_DATA.map((exp, i) => (
+          <div class="exp-detail-pane" data-idx={i} hidden={i !== 0 ? true : undefined}>
+            <div class="exp-detail__header">
+              <div class="exp-detail__left">
+                <div class="exp-detail__role">
+                  <span class="exp-detail__title">{exp.role}</span>
+                  {exp.current && <span class="exp-detail__badge">current</span>}
+                </div>
+                <div class="exp-detail__sub">
+                  <span>{exp.type}</span>
+                </div>
+              </div>
+              <div class="exp-detail__right">
+                <span>{exp.period}</span>
+                <span>{exp.location}</span>
+              </div>
+            </div>
+            <ul class="exp-detail__bullets">
+              {exp.bullets.map(b => <li>{b}</li>)}
+            </ul>
+            <div class="exp-detail__tags">
+              {exp.tags.map(t => <span class="exp-tag">{t}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const tabs  = Array.from(document.querySelectorAll<HTMLElement>('.exp-tab'));
+  const panes = Array.from(document.querySelectorAll<HTMLElement>('.exp-detail-pane'));
+  const panel = document.getElementById('exp-detail');
+
+  function activate(idx: number) {
+    tabs.forEach((tab, i) => {
+      const on   = i === idx;
+      const mono = tab.querySelector('.exp-tab__mono');
+      tab.classList.toggle('active', on);
+      tab.setAttribute('aria-selected', String(on));
+      tab.setAttribute('tabindex', on ? '0' : '-1');
+      if (mono) mono.classList.toggle('active', on);
+    });
+    panes.forEach((pane, i) => { pane.hidden = i !== idx; });
+    if (panel && tabs[idx]) panel.setAttribute('aria-labelledby', tabs[idx].id);
+  }
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => activate(i));
+    tab.addEventListener('keydown', e => {
+      let next: number | null = null;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+      if (next !== null) { e.preventDefault(); activate(next); tabs[next].focus(); }
+    });
+  });
+</script>

@@ -1,0 +1,679 @@
+---
+---
+
+<section id="about" class="snap-section snap-section--centered">
+  <div class="snap-body">
+    <div class="about-layout">
+
+      <div class="about-left-col">
+        <p class="about-greeting">Hey there, I'm</p>
+
+        <div class="about-profile-row">
+          <div class="about-profile-info">
+            <h1 class="about-name">Muhammed Rashid</h1>
+            <div class="about-intro">
+              <i class="fa-solid fa-angle-right"></i>
+              <span>I am a&nbsp;</span>
+              <span id="typing-text" aria-live="polite" aria-label="Role"></span>
+              <span class="about-cursor" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+
+        <p class="about-headline">
+          <span><i class="fa-solid fa-code" aria-hidden="true"></i>Building scalable web apps</span>
+          <span class="about-headline__sep">|</span>
+          <span><i class="fa-solid fa-layer-group" aria-hidden="true"></i>MERN / MEAN Stack</span>
+        </p>
+
+        <p class="about-bio">
+          Passionate Full Stack Developer with expertise in building efficient, scalable web
+          applications using modern technologies like React, Angular, Node.js, MongoDB, and MySQL.
+        </p>
+
+        <div class="about-quickfacts">
+          <span class="about-qf-chip"><i class="fa-solid fa-calendar" aria-hidden="true"></i>2+ Years Exp</span>
+          <span class="about-qf-chip"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>Full Time</span>
+          <span class="about-qf-chip"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Kerala, India</span>
+          <span class="about-qf-chip about-qf-chip--active"><span class="about-qf-dot" aria-hidden="true"></span>Open to Work</span>
+        </div>
+
+        <div class="about-stats-strip">
+          <div class="stat-card anim">
+            <span class="stat-val"><span class="stat-num" id="about-projects-stat" data-target="12">0</span><span class="stat-suffix">+</span></span>
+            <span class="stat-label">projects</span>
+          </div>
+          <div class="stat-card anim">
+            <span class="stat-val"><span class="stat-num" data-target="10">0</span><span class="stat-suffix">+</span></span>
+            <span class="stat-label">technologies</span>
+          </div>
+          <div class="stat-card anim">
+            <span class="stat-val"><span class="stat-num" data-target="100">0</span><span class="stat-suffix">+</span></span>
+            <span class="stat-label">bugs fixed</span>
+          </div>
+        </div>
+
+        <div class="about-cta">
+          <button id="contact-btn" type="button" class="filled-btn">
+            <i class="fa-solid fa-envelope"></i>Get in touch
+          </button>
+          <nav class="about-socials" aria-label="Social links">
+            <a href="https://github.com/devmdrd"      target="_blank" rel="noreferrer" aria-label="GitHub"   class="outline-btn"><i class="fa-brands fa-github"></i></a>
+            <a href="https://linkedin.com/in/devmdrd" target="_blank" rel="noreferrer" aria-label="LinkedIn" class="outline-btn"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://x.com/devmdrd"           target="_blank" rel="noreferrer" aria-label="X"        class="outline-btn"><i class="fa-brands fa-x-twitter"></i></a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="about-card-col">
+        <div class="about-card">
+          <div class="about-card__head">
+            <i class="fa-brands fa-github" aria-hidden="true"></i>
+            <span>devmdrd</span>
+            <span class="about-card__slash">/</span>
+            <span class="about-card__dim">github</span>
+            <a href="https://github.com/devmdrd" target="_blank" rel="noreferrer"
+               class="about-card__head-link" aria-label="View GitHub profile">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+
+          <div class="about-card__body">
+
+            <p class="about-card__label"><i class="fa-solid fa-gauge-high"></i>overview</p>
+            <div id="gh-stats">
+              <div class="stats-grid stats-grid--sm">
+                <div class="stat-card">
+                  <div class="stat-card__value" data-stat="contributions"><span class="sk sk--inline"></span></div>
+                  <div class="stat-card__label">Contributions</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-card__value" data-stat="followers"><span class="sk sk--inline"></span></div>
+                  <div class="stat-card__label">Followers</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-card__value" data-stat="repos"><span class="sk sk--inline"></span></div>
+                  <div class="stat-card__label">Repos</div>
+                </div>
+              </div>
+            </div>
+
+            <p class="about-card__label"><i class="fa-solid fa-fire"></i>streak</p>
+            <div id="gh-streak">
+              <div class="streak-grid">
+                <div class="streak-cell">
+                  <i class="fa-solid fa-chart-line"></i>
+                  <div class="streak-cell__value" data-streak="total"><span class="sk sk--inline"></span></div>
+                  <div class="streak-cell__label">Total</div>
+                </div>
+                <div class="streak-cell">
+                  <i class="fa-solid fa-fire"></i>
+                  <div class="streak-cell__value" data-streak="current"><span class="sk sk--inline"></span></div>
+                  <div class="streak-cell__label">Current</div>
+                </div>
+                <div class="streak-cell">
+                  <i class="fa-solid fa-trophy"></i>
+                  <div class="streak-cell__value" data-streak="longest"><span class="sk sk--inline"></span></div>
+                  <div class="streak-cell__label">Longest</div>
+                </div>
+              </div>
+            </div>
+
+            <p class="about-card__label"><i class="fa-solid fa-code"></i>top languages</p>
+            <div id="gh-langs">
+              <div id="langs-sk" class="lang-sk">
+                <div class="sk lang-sk__bar"></div>
+                <div class="lang-sk__labels">
+                  <div class="lang-sk__label"><div class="sk lang-sk__dot"></div><div class="sk lang-sk__name"></div></div>
+                  <div class="lang-sk__label"><div class="sk lang-sk__dot"></div><div class="sk lang-sk__name"></div></div>
+                  <div class="lang-sk__label"><div class="sk lang-sk__dot"></div><div class="sk lang-sk__name"></div></div>
+                  <div class="lang-sk__label"><div class="sk lang-sk__dot"></div><div class="sk lang-sk__name"></div></div>
+                </div>
+              </div>
+              <div class="langs-list" id="langs-list" hidden></div>
+            </div>
+
+            <div class="about-card__label about-card__label--row">
+              <span class="about-card__label-left"><i class="fa-solid fa-calendar-check"></i>contributions</span>
+              <span id="contrib-year-wrap"></span>
+            </div>
+            <div id="gh-contrib" class="contrib-chart">
+              <div id="contrib-sk" class="sk sk--contrib"></div>
+              <div id="contrib-content" hidden>
+                <div class="contrib-chart__scroll">
+                  <div id="contrib-inner">
+                    <div class="contrib-chart__month-row">
+                      <div class="contrib-chart__day-spacer"></div>
+                      <div class="contrib-chart__month-labels" id="contrib-months"></div>
+                    </div>
+                    <div class="contrib-chart__body">
+                      <div class="contrib-chart__day-labels" id="contrib-days"></div>
+                      <div class="contrib-grid" role="img" id="contrib-grid" aria-label="GitHub contribution activity chart"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="contrib-tooltip" id="contrib-tooltip" role="tooltip"></div>
+                <div class="contrib-legend" id="contrib-legend" aria-hidden="true">
+                  <span class="legend-less">Less</span>
+                  <span class="legend-more">More</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  const ROLES = [
+    'Full Stack Developer',
+    'Software Engineer',
+    'MERN/MEAN Stack Developer',
+    'Web Developer',
+    'Tech Enthusiast',
+  ];
+
+  const _reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const GITHUB_USERNAME = 'devmdrd';
+  const CACHE_TTL       = 5 * 60 * 1000;
+  const TIMEOUT_MS      = 8000;
+
+  function readCache(key) {
+    try {
+      const raw = sessionStorage.getItem(key);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (Date.now() - parsed.ts > CACHE_TTL) { sessionStorage.removeItem(key); return null; }
+      return parsed.data;
+    } catch { return null; }
+  }
+
+  function writeCache(key, data) {
+    try { sessionStorage.setItem(key, JSON.stringify({ ts: Date.now(), data })); } catch {}
+  }
+
+  function fmt(n) {
+    return n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n ?? 0);
+  }
+
+  function getTheme() {
+    return document.documentElement.dataset.theme || 'dark';
+  }
+
+  const typingTarget = document.getElementById('typing-text');
+  if (typingTarget) {
+    if (_reducedMotion.matches) {
+      typingTarget.textContent = ROLES[0];
+    } else {
+      const tryInit = setInterval(() => {
+        if (typeof Typed !== 'undefined') {
+          clearInterval(tryInit);
+          new Typed(typingTarget, { strings: ROLES, typeSpeed: 60, backSpeed: 30, loop: true, smartBackspace: true, showCursor: false });
+        }
+      }, 50);
+    }
+  }
+
+  let _portfolioReady = false;
+  let _aboutVisible   = false;
+  let _counted        = false;
+
+  function animateCounters() {
+    if (_counted || !_portfolioReady || !_aboutVisible) return;
+    _counted = true;
+    document.querySelectorAll('.stat-num[data-target]:not([data-counted])').forEach(el => {
+      el.dataset.counted = '1';
+      const target = parseInt(el.dataset.target, 10);
+      if (_reducedMotion.matches) { el.textContent = String(target); return; }
+      const tryCount = setInterval(() => {
+        if (typeof countUp !== 'undefined') {
+          clearInterval(tryCount);
+          new countUp.CountUp(el, target, { duration: 0.9 }).start();
+        }
+      }, 50);
+    });
+  }
+
+  document.addEventListener('portfolio:ready', () => { _portfolioReady = true; animateCounters(); });
+
+  const aboutEl = document.getElementById('about');
+  if (aboutEl) {
+    new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { _aboutVisible = true; animateCounters(); }
+    }, { threshold: 0.1 }).observe(aboutEl);
+  }
+
+  function initAnimations(root) {
+    root.querySelectorAll('.anim:not(.anim-visible)').forEach((el, i) => {
+      if (_reducedMotion.matches) el.classList.add('anim-visible');
+      else setTimeout(() => el.classList.add('anim-visible'), i * 50);
+    });
+  }
+
+  document.addEventListener('portfolio:ready', () => initAnimations(document.getElementById('about') ?? document));
+
+  const DEFAULT_STREAK = { total: 0, current: 0, longest: 0 };
+
+  async function fetchMain() {
+    const cached = readCache('gh_main');
+    if (cached) return cached;
+
+    const [uRes, rRes] = await Promise.all([
+      fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, { signal: AbortSignal.timeout(TIMEOUT_MS) }),
+      fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`, { signal: AbortSignal.timeout(TIMEOUT_MS) }),
+    ]);
+
+    if (!uRes.ok) {
+      if (uRes.status === 403 || uRes.status === 429) {
+        const reset = uRes.headers.get('X-RateLimit-Reset');
+        const wait  = reset ? Math.ceil((Number(reset) * 1000 - Date.now()) / 60000) : 60;
+        throw Object.assign(new Error('rate_limited'), { retryAfter: wait });
+      }
+      throw new Error(`http_${uRes.status}`);
+    }
+
+    const user = await uRes.json();
+    if (!rRes.ok) throw new Error(`repos_http_${rRes.status}`);
+    const list = await rRes.json();
+    if (!Array.isArray(list)) throw new Error('repos_failed');
+
+    const nonFork = list.filter(r => !r.fork);
+    const stats = {
+      followers: Number(user.followers) || 0,
+      repos:     nonFork.length,
+      stars:     list.reduce((s, r) => s + (r.stargazers_count ?? 0), 0),
+      joinedAt:  user.created_at ?? null,
+    };
+
+    const langResults = await Promise.allSettled(
+      list.map(r => fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${r.name}/languages`, { signal: AbortSignal.timeout(TIMEOUT_MS) }).then(res => res.ok ? res.json() : {}))
+    );
+    const langs = {};
+    langResults.forEach(r => {
+      if (r.status === 'fulfilled') {
+        Object.entries(r.value).forEach(([lang, bytes]) => { langs[lang] = (langs[lang] ?? 0) + bytes; });
+      }
+    });
+
+    const repos = nonFork.map(r => ({
+      id: r.id, name: r.name, description: r.description ?? '', stars: r.stargazers_count ?? 0,
+      forks: r.forks_count ?? 0, language: r.language ?? '', topics: r.topics ?? [],
+      updatedAt: r.updated_at, url: r.html_url, homepage: r.homepage ?? '',
+    }));
+
+    const result = { stats, langs, repos };
+    writeCache('gh_main', result);
+    return result;
+  }
+
+  function computeStreak(flat) {
+    if (!Array.isArray(flat) || !flat.length) return { current: 0, longest: 0 };
+    const now   = new Date();
+    const today = [now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0')].join('-');
+    let longest = 0, run = 0;
+    flat.forEach(item => { if (item.count > 0) { run++; if (run > longest) longest = run; } else run = 0; });
+    let current = 0;
+    for (let i = flat.length - 1; i >= 0; i--) {
+      if (flat[i].count > 0) current++;
+      else if (flat[i].date === today) continue;
+      else break;
+    }
+    return { current, longest };
+  }
+
+  async function fetchContribs() {
+    const cached = readCache('gh_contrib');
+    if (cached) return cached;
+
+    const res  = await fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=all`, { signal: AbortSignal.timeout(TIMEOUT_MS) });
+    if (!res.ok) throw new Error('contrib_error');
+
+    const json = await res.json();
+    const flat = Array.isArray(json.contributions)
+      ? json.contributions.filter(e => e && typeof e.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(e.date))
+      : [];
+
+    const weeksMap = {};
+    flat.forEach(e => {
+      const d   = new Date(e.date);
+      const sun = new Date(d);
+      sun.setDate(d.getDate() - d.getDay());
+      const k = sun.toISOString().slice(0, 10);
+      if (!weeksMap[k]) weeksMap[k] = [];
+      weeksMap[k].push({ date: e.date, contributionCount: e.count });
+    });
+
+    const weeks      = Object.keys(weeksMap).sort().map(k => ({ contributionDays: weeksMap[k] }));
+    const total      = flat.reduce((s, d) => s + d.count, 0);
+    const streakData = computeStreak(flat);
+
+    const result = { contribData: { totalContributions: total, weeks }, streak: { total, current: streakData.current, longest: streakData.longest } };
+    writeCache('gh_contrib', result);
+    return result;
+  }
+
+  function renderStats(stats, streak) {
+    const v = { ...stats, contributions: streak.total };
+    document.querySelectorAll('[data-stat]').forEach(cell => { cell.textContent = fmt(v[cell.dataset.stat] ?? 0); });
+    document.querySelectorAll('[aria-label="View all repositories on GitHub"]').forEach(el => {
+      el.href = `https://github.com/${GITHUB_USERNAME}?tab=repositories`;
+    });
+  }
+
+  function renderStreak(streak) {
+    const vals = { total: fmt(streak.total), current: `${streak.current}d`, longest: `${streak.longest}d` };
+    document.querySelectorAll('[data-streak]').forEach(cell => { cell.textContent = vals[cell.dataset.streak]; });
+  }
+
+  const LANG_OPACITIES = [1, 0.72, 0.52, 0.38, 0.28, 0.20, 0.14, 0.10];
+
+  function renderLangsInto(skId, listId, langs) {
+    const sk   = document.getElementById(skId);
+    const list = document.getElementById(listId);
+    if (!list) return;
+
+    const total  = Object.values(langs).reduce((a, b) => a + b, 0) || 1;
+    const sorted = Object.entries(langs).sort(([, a], [, b]) => b - a).slice(0, 8);
+
+    if (!sorted.length) {
+      const d = document.createElement('div');
+      d.className = 'gh-error'; d.textContent = 'no language data';
+      list.replaceChildren(d);
+    } else {
+      const wrap = document.createElement('div');
+      wrap.className = 'lang-bar-wrap';
+
+      const bar = document.createElement('div');
+      bar.className = 'lang-bar';
+      sorted.forEach(([lang, count], i) => {
+        const pct = (count / total) * 100;
+        const seg = document.createElement('div');
+        seg.className     = 'lang-bar__seg';
+        seg.style.width   = `${pct}%`;
+        seg.style.opacity = String(LANG_OPACITIES[i] ?? 0.08);
+        seg.title         = `${lang} ${pct.toFixed(1)}%`;
+        bar.appendChild(seg);
+      });
+
+      const labels = document.createElement('div');
+      labels.className = 'lang-labels';
+      sorted.forEach(([lang, count], i) => {
+        const pct   = (count / total * 100).toFixed(1);
+        const label = document.createElement('span');
+        label.className = 'lang-label';
+
+        const dot = document.createElement('span');
+        dot.className     = 'lang-dot';
+        dot.style.opacity = String(LANG_OPACITIES[i] ?? 0.08);
+
+        const nameEl = document.createElement('span');
+        nameEl.className = 'lang-name'; nameEl.textContent = lang;
+
+        const pctEl = document.createElement('span');
+        pctEl.className = 'lang-pct'; pctEl.textContent = `${pct}%`;
+
+        label.append(dot, nameEl, pctEl);
+        labels.appendChild(label);
+      });
+
+      wrap.append(bar, labels);
+      list.replaceChildren(wrap);
+    }
+
+    if (sk) sk.hidden = true;
+    list.hidden = false;
+  }
+
+  function renderLangs(langs) {
+    renderLangsInto('langs-sk',   'langs-list',   langs);
+    renderLangsInto('langs-sk-m', 'langs-list-m', langs);
+  }
+
+  const CELL_SIZE     = 8;
+  const CELL_GAP      = 1;
+  const CELL_STEP     = 9;
+  const DAY_LABELS    = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
+  const LEGEND_COUNTS = [0, 3, 8, 15, 20];
+
+  function contribColor(count, theme) {
+    const base = theme !== 'light' ? '255,255,255' : '0,0,0';
+    if (!count)     return `rgba(${base},0.07)`;
+    if (count < 4)  return `rgba(${base},0.22)`;
+    if (count < 9)  return `rgba(${base},0.45)`;
+    if (count < 16) return `rgba(${base},0.70)`;
+    return `rgba(${base},1)`;
+  }
+
+  function buildContribMap(weeks) {
+    const map = {};
+    (weeks ?? []).forEach(w => { (w.contributionDays ?? []).forEach(d => { map[d.date] = d.contributionCount; }); });
+    return map;
+  }
+
+  function genDays(year, map, joinedAt) {
+    const now  = new Date();
+    const join = joinedAt ? new Date(joinedAt) : null;
+    let   cur  = new Date(year, 0, 1);
+    const end  = new Date(year, 11, 31);
+    const days = [];
+    while (cur <= end) {
+      const iso = [cur.getFullYear(), String(cur.getMonth() + 1).padStart(2, '0'), String(cur.getDate()).padStart(2, '0')].join('-');
+      days.push({ date: iso, count: map[iso] ?? 0, disabled: cur > now || (join && cur < join) });
+      cur.setDate(cur.getDate() + 1);
+    }
+    return days;
+  }
+
+  function toWeeks(days) {
+    const startDay = new Date(days[0].date + 'T00:00:00').getDay();
+    let week  = Array.from({ length: startDay }, () => null);
+    const weeks = [];
+    days.forEach(d => {
+      week.push(d);
+      if (week.length === 7) { weeks.push(week); week = []; }
+    });
+    if (week.length) { while (week.length < 7) week.push(null); weeks.push(week); }
+    return weeks;
+  }
+
+  function drawChart(data, joinedAt, year, theme, content) {
+    const map   = buildContribMap(data.weeks);
+    const days  = genDays(year, map, joinedAt);
+    const weeks = toWeeks(days);
+
+    const monthsEl = content.querySelector('.contrib-chart__month-labels');
+    if (monthsEl) {
+      monthsEl.style.width = `${weeks.length * CELL_STEP}px`;
+      monthsEl.textContent = '';
+      const seen = new Set();
+      weeks.forEach((w, wi) => {
+        w.forEach(d => {
+          if (!d) return;
+          const dt = new Date(d.date + 'T00:00:00');
+          const k  = `${dt.getFullYear()}-${dt.getMonth()}`;
+          if (!seen.has(k) && dt.getDate() <= 7) {
+            seen.add(k);
+            const mSpan = document.createElement('span');
+            mSpan.className = 'contrib-chart__month';
+            mSpan.style.left = (wi * CELL_STEP) + 'px';
+            mSpan.textContent = dt.toLocaleString('default', { month: 'short' });
+            monthsEl.appendChild(mSpan);
+          }
+        });
+      });
+    }
+
+    const daysEl = content.querySelector('.contrib-chart__day-labels');
+    if (daysEl) {
+      const frag = document.createDocumentFragment();
+      DAY_LABELS.forEach((label, i) => {
+        const div = document.createElement('div');
+        div.className = 'contrib-chart__day';
+        div.style.height = CELL_SIZE + 'px';
+        div.style.marginBottom = (i === 6 ? 0 : CELL_GAP) + 'px';
+        div.textContent = label;
+        frag.appendChild(div);
+      });
+      daysEl.replaceChildren(frag);
+    }
+
+    const innerEl = content.querySelector('.contrib-chart__scroll > div');
+    if (innerEl) innerEl.style.width = `${weeks.length * CELL_STEP + 28}px`;
+
+    const grid = content.querySelector('.contrib-grid');
+    if (grid) {
+      const total = weeks.flat().reduce((s, d) => s + (d?.count ?? 0), 0);
+      grid.setAttribute('aria-label', `Contributions ${year} — ${total} total`);
+      const gridFrag = document.createDocumentFragment();
+      weeks.forEach(w => {
+        w.forEach(d => {
+          const cell = document.createElement('div');
+          if (!d) {
+            cell.className = 'cell';
+          } else {
+            const count = Number(d.count);
+            cell.className = 'cell contrib-cell ' + (d.disabled ? 'is-disabled' : 'is-active');
+            cell.style.backgroundColor = contribColor(count, theme);
+            cell.dataset.date  = String(d.date).replace(/[^0-9-]/g, '');
+            cell.dataset.count = String(count);
+          }
+          gridFrag.appendChild(cell);
+        });
+      });
+      grid.replaceChildren(gridFrag);
+    }
+
+    const legendEl = content.querySelector('.contrib-legend');
+    if (legendEl) {
+      const lessNode  = legendEl.querySelector('.legend-less');
+      const moreNode  = legendEl.querySelector('.legend-more');
+      const lessClone = lessNode?.cloneNode(true);
+      const moreClone = moreNode?.cloneNode(true);
+      const legFrag   = document.createDocumentFragment();
+      if (lessClone) legFrag.appendChild(lessClone);
+      LEGEND_COUNTS.forEach(v => {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.style.backgroundColor = contribColor(v, theme);
+        legFrag.appendChild(cell);
+      });
+      if (moreClone) legFrag.appendChild(moreClone);
+      legendEl.replaceChildren(legFrag);
+    }
+  }
+
+  function initContribInstance(wrapperId, skId, contentId, yearWrapId, yearSelectId, data, joinedAt, yearArg, onYearChange) {
+    const wrapper  = document.getElementById(wrapperId);
+    const sk       = document.getElementById(skId);
+    const content  = document.getElementById(contentId);
+    if (!wrapper || !content) return null;
+    if (sk) sk.hidden = true;
+    content.hidden = false;
+
+    const grid = content.querySelector('.contrib-grid');
+    const tip  = content.querySelector('.contrib-tooltip');
+    if (grid && tip) {
+      grid.addEventListener('mouseover', e => {
+        const cell = e.target.closest('.contrib-cell.is-active');
+        if (!cell) return;
+        const n  = Number(cell.dataset.count);
+        const cr = cell.getBoundingClientRect();
+        const pr = content.getBoundingClientRect();
+        tip.textContent   = `${n} contribution${n !== 1 ? 's' : ''} on ${cell.dataset.date}`;
+        tip.style.cssText = `display:block;left:${cr.left - pr.left + cr.width / 2}px;top:${cr.top - pr.top - 6}px;transform:translate(-50%,-100%)`;
+      });
+      grid.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+    }
+
+    const yearWrap = document.getElementById(yearWrapId);
+    if (yearWrap && !yearWrap.querySelector('select') && yearArg) {
+      const sel = document.createElement('select');
+      sel.className = 'select-field select-field--xs contrib-year-select';
+      sel.id        = yearSelectId;
+      sel.setAttribute('aria-label', 'Select year');
+      yearArg.list.forEach(y => sel.add(new Option(y, y, y === yearArg.current, y === yearArg.current)));
+      yearWrap.appendChild(sel);
+      sel.addEventListener('change', e => onYearChange(Number(e.target.value)));
+    }
+    return content;
+  }
+
+  function renderContribChart(data, joinedAt) {
+    const currentYear  = new Date().getFullYear();
+    const yearsInData  = Array.from(new Set(
+      (data.weeks ?? []).flatMap(w => (w.contributionDays ?? []).map(d => new Date(d.date + 'T00:00:00').getFullYear()))
+    )).sort((a, b) => b - a);
+    if (!yearsInData.length) yearsInData.push(currentYear);
+    const yearState = { current: currentYear, list: yearsInData };
+    const yearArg   = yearsInData.length > 1 ? yearState : null;
+
+    const contentDesktop = initContribInstance('gh-contrib',   'contrib-sk',   'contrib-content',   'contrib-year-wrap',   'contrib-year-select',   data, joinedAt, yearArg, y => { yearState.current = y; redrawAll(); });
+    const contentMobile  = initContribInstance('gh-contrib-m', 'contrib-sk-m', 'contrib-content-m', 'contrib-year-wrap-m', 'contrib-year-select-m', data, joinedAt, yearArg, y => { yearState.current = y; redrawAll(); });
+
+    function redrawAll() {
+      const theme = getTheme();
+      if (contentDesktop) drawChart(data, joinedAt, yearState.current, theme, contentDesktop);
+      if (contentMobile)  drawChart(data, joinedAt, yearState.current, theme, contentMobile);
+      document.querySelectorAll('.contrib-year-select').forEach(s => { s.value = String(yearState.current); });
+    }
+
+    redrawAll();
+
+    if (renderContribChart._obs) renderContribChart._obs.disconnect();
+    renderContribChart._obs = new MutationObserver(redrawAll);
+    renderContribChart._obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
+
+  function setError(id, label, err) {
+    const msg = err?.retryAfter ? `GitHub rate limit — retry in ${err.retryAfter}min` : `failed to load ${label}`;
+    [id, id + '-m'].forEach(elId => {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      const div = document.createElement('div'); div.className = 'gh-error'; div.textContent = msg;
+      el.replaceChildren(div);
+    });
+  }
+
+  Promise.allSettled([fetchMain(), fetchContribs()]).then(([mainR, contribR]) => {
+    if (mainR.status === 'fulfilled') {
+      const { stats, langs, repos } = mainR.value;
+      const streak = contribR.status === 'fulfilled' ? contribR.value.streak : DEFAULT_STREAK;
+
+      renderStats(stats, streak);
+      renderLangs(langs);
+
+      const projEl  = document.getElementById('about-projects-stat');
+      if (projEl && repos.length !== parseInt(projEl.dataset.target, 10)) {
+        projEl.dataset.target = repos.length;
+        delete projEl.dataset.counted;
+        projEl.textContent = '0';
+        _counted = false;
+        animateCounters();
+      }
+
+      if (contribR.status === 'fulfilled') {
+        renderStreak(contribR.value.streak);
+        renderContribChart(contribR.value.contribData, stats.joinedAt);
+      } else {
+        renderStreak(DEFAULT_STREAK);
+        setError('gh-contrib', 'contributions');
+      }
+    } else {
+      setError('gh-stats',  'overview',   mainR.reason);
+      setError('gh-langs',  'languages',  mainR.reason);
+      setError('gh-streak', 'streak',     mainR.reason);
+      if (contribR.status === 'fulfilled') {
+        renderStreak(contribR.value.streak);
+        renderContribChart(contribR.value.contribData, null);
+      } else {
+        renderStreak(DEFAULT_STREAK);
+        setError('gh-contrib', 'contributions');
+      }
+    }
+  });
+</script>

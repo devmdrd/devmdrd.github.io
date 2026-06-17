@@ -1,0 +1,113 @@
+---
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mnnvvnwp';
+const CONTACT_EMAIL      = 'mdrd.muhammedrashid@gmail.com';
+const CONTACT_AUTO_CLEAR = 8000;
+---
+
+<section id="contact" class="snap-section snap-section--centered">
+  <div class="snap-body">
+
+    <h2 class="section-title" id="contact-title">
+      <i class="fa-solid fa-paper-plane"></i>get in touch
+    </h2>
+
+    <div class="contact-layout">
+
+      <div class="contact-left">
+        <p class="contact-tagline">Open to full-time and remote roles. Drop me a message and I'll get back to you soon.</p>
+        <div class="contact-links">
+          <a href={`mailto:${CONTACT_EMAIL}`} aria-label="Email" class="outline-btn">
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+          <a href="https://github.com/devmdrd"      aria-label="GitHub"   class="outline-btn" target="_blank" rel="noreferrer"><i class="fa-brands fa-github"></i></a>
+          <a href="https://linkedin.com/in/devmdrd" aria-label="LinkedIn" class="outline-btn" target="_blank" rel="noreferrer"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="https://x.com/devmdrd"           aria-label="X"        class="outline-btn" target="_blank" rel="noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+      </div>
+
+      <div class="contact-right">
+        <div id="contact-feedback" class="contact-feedback" role="status" aria-live="polite" hidden></div>
+
+        <form id="contact-form"
+              method="POST"
+              novalidate
+              aria-labelledby="contact-title"
+              class="contact-form">
+          <label for="contact-name"    class="sr-only">Full name</label>
+          <input id="contact-name"  type="text"  name="name"    placeholder="your name"       autocomplete="name"  required class="form-field" />
+          <label for="contact-email"   class="sr-only">Email address</label>
+          <input id="contact-email" type="email" name="email"   placeholder="email address"   autocomplete="email" required class="form-field" />
+          <label for="contact-message" class="sr-only">Message</label>
+          <textarea id="contact-message" name="message" placeholder="your message ..." rows="4" required class="form-field form-textarea"></textarea>
+          <button id="contact-submit" type="submit" class="filled-btn contact-submit">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span class="btn-text">send message</span>
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script define:vars={{ FORMSPREE_ENDPOINT, CONTACT_EMAIL, CONTACT_AUTO_CLEAR }}>
+  const form     = document.getElementById('contact-form');
+  const feedback = document.getElementById('contact-feedback');
+  const submit   = document.getElementById('contact-submit');
+  if (!form) throw new Error('contact form missing');
+
+  let clearTimer = null;
+
+  function showFeedback(status, message) {
+    if (!feedback) return;
+    feedback.className   = `contact-feedback feedback-msg--${status}`;
+    feedback.textContent = message;
+    feedback.hidden      = false;
+    clearTimeout(clearTimer);
+    clearTimer = setTimeout(() => { feedback.hidden = true; }, CONTACT_AUTO_CLEAR);
+  }
+
+  function setSending(on) {
+    if (!submit) return;
+    submit.disabled = on;
+    const icon = submit.querySelector('i');
+    const text = submit.querySelector('.btn-text');
+    if (icon) icon.className   = on ? 'fa-solid fa-spinner fa-spin' : 'fa-solid fa-paper-plane';
+    if (text) text.textContent = on ? 'sending...' : 'send message';
+  }
+
+  form.querySelectorAll('[required]').forEach(field => {
+    field.addEventListener('blur',  () => { field.classList.toggle('is-invalid', !field.validity.valid); });
+    field.addEventListener('input', () => { if (field.classList.contains('is-invalid')) field.classList.toggle('is-invalid', !field.validity.valid); });
+  });
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    clearTimeout(clearTimer);
+    if (feedback) feedback.hidden = true;
+
+    if (!form.checkValidity()) {
+      form.querySelectorAll('[required]').forEach(field => { field.classList.toggle('is-invalid', !field.validity.valid); });
+      return;
+    }
+
+    setSending(true);
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+        referrerPolicy: 'strict-origin',
+      });
+      if (!res.ok) throw new Error();
+      form.reset();
+      form.querySelectorAll('.is-invalid').forEach(f => f.classList.remove('is-invalid'));
+      showFeedback('success', "Message sent! I'll get back to you soon.");
+    } catch {
+      showFeedback('error', `Failed. Please email ${CONTACT_EMAIL} directly.`);
+    } finally {
+      setSending(false);
+    }
+  });
+</script>

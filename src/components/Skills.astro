@@ -1,0 +1,133 @@
+---
+const SKILLS_DATA = [
+  { name: 'HTML5',        icon: 'fa-brands fa-html5',          category: 'Frontend', level: 95 },
+  { name: 'CSS3',         icon: 'fa-brands fa-css3-alt',       category: 'Frontend', level: 90 },
+  { name: 'JavaScript',   icon: 'fa-brands fa-js',             category: 'Frontend', level: 92 },
+  { name: 'TypeScript',   icon: 'fa-solid fa-code',            category: 'Frontend', level: 80 },
+  { name: 'React.js',     icon: 'fa-brands fa-react',          category: 'Frontend', level: 88 },
+  { name: 'Angular',      icon: 'fa-brands fa-angular',        category: 'Frontend', level: 85 },
+  { name: 'Tailwind CSS', icon: 'fa-solid fa-wind',            category: 'Frontend', level: 88 },
+  { name: 'Node.js',      icon: 'fa-brands fa-node-js',        category: 'Backend',  level: 88 },
+  { name: 'Express.js',   icon: 'fa-solid fa-server',          category: 'Backend',  level: 85 },
+  { name: 'REST APIs',    icon: 'fa-solid fa-diagram-project', category: 'Backend',  level: 90 },
+  { name: 'MongoDB',      icon: 'fa-solid fa-database',        category: 'Database', level: 82 },
+  { name: 'MySQL',        icon: 'fa-solid fa-table-columns',   category: 'Database', level: 78 },
+  { name: 'Git',          icon: 'fa-brands fa-git-alt',        category: 'Tools',    level: 90 },
+  { name: 'GitHub',       icon: 'fa-brands fa-github',         category: 'Tools',    level: 90 },
+  { name: 'Postman',      icon: 'fa-solid fa-paper-plane',     category: 'Tools',    level: 85 },
+];
+
+const categories = [...new Set(SKILLS_DATA.map(s => s.category))];
+---
+
+<section id="skills" class="snap-section snap-section--centered">
+  <div class="snap-body">
+
+    <h2 class="section-title"><i class="fa-solid fa-code"></i>skills &amp; technologies</h2>
+
+    <div class="skills-filters">
+      <div class="skills-search-wrap">
+        <i class="fa-solid fa-magnifying-glass skills-search-icon" aria-hidden="true"></i>
+        <input id="skills-search" type="search" placeholder="search skills..."
+               aria-label="Search skills" class="skills-search" />
+      </div>
+      <div class="skills-categories" id="skills-categories" role="tablist" aria-label="Filter skills by category">
+        <button type="button" class="skill-filter-btn active" data-category="" role="tab" aria-selected="true">All</button>
+        {categories.map(cat => (
+          <button type="button" class="skill-filter-btn" data-category={cat} role="tab" aria-selected="false">{cat}</button>
+        ))}
+      </div>
+    </div>
+
+    <div id="skills-grid" class="skills-grid">
+      {SKILLS_DATA.map(skill => (
+        <div class="skill-card anim" data-category={skill.category}>
+          <div class="skill-card__head">
+            <i class={`skill-card__icon ${skill.icon}`}></i>
+            <span class="skill-card__name">{skill.name}</span>
+            <span class="skill-card__level">{skill.level}%</span>
+          </div>
+          <div class="skill-card__bar">
+            <div class="skill-card__bar-fill" data-level={skill.level}></div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const grid     = document.getElementById('skills-grid');
+  const search   = document.getElementById('skills-search') as HTMLInputElement | null;
+  const catsBar  = document.getElementById('skills-categories');
+  const allCards = Array.from(grid?.querySelectorAll<HTMLElement>('.skill-card') ?? []);
+
+  let _query    = '';
+  let _category = '';
+
+  function filterSkills() {
+    const q = _query.toLowerCase();
+    allCards.forEach(card => {
+      const name = card.querySelector('.skill-card__name')?.textContent?.toLowerCase() ?? '';
+      const cat  = card.dataset.category ?? '';
+      const matchCat   = !_category || cat === _category;
+      const matchQuery = !q || name.includes(q);
+      card.hidden = !(matchCat && matchQuery);
+    });
+
+    let emptyEl = grid?.querySelector<HTMLElement>('.skills-empty');
+    const anyVisible = allCards.some(c => !c.hidden);
+    if (!anyVisible) {
+      if (!emptyEl) {
+        emptyEl = document.createElement('div');
+        emptyEl.className = 'skills-empty';
+        emptyEl.textContent = 'No skills match your filters';
+        grid?.appendChild(emptyEl);
+      }
+      emptyEl.hidden = false;
+    } else if (emptyEl) {
+      emptyEl.hidden = true;
+    }
+  }
+
+  function animateSkillBars(root: Element) {
+    root.querySelectorAll<HTMLElement>('.skill-card__bar-fill').forEach(el => {
+      requestAnimationFrame(() => { el.style.width = `${el.dataset.level}%`; });
+    });
+  }
+
+  catsBar?.addEventListener('click', e => {
+    const btn = (e.target as Element).closest<HTMLElement>('.skill-filter-btn');
+    if (!btn) return;
+    _category = btn.dataset.category ?? '';
+    catsBar.querySelectorAll('.skill-filter-btn').forEach(b => {
+      const on = b === btn;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', String(on));
+    });
+    filterSkills();
+  });
+
+  catsBar?.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    const btns = [...catsBar.querySelectorAll<HTMLElement>('.skill-filter-btn')];
+    const i = btns.indexOf(document.activeElement as HTMLElement);
+    if (i === -1) return;
+    e.preventDefault();
+    btns[(i + (e.key === 'ArrowRight' ? 1 : -1) + btns.length) % btns.length].focus();
+  });
+
+  let searchTimer: ReturnType<typeof setTimeout>;
+  search?.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => { _query = search.value; filterSkills(); }, 200);
+  });
+
+  const skillsSection = document.getElementById('skills');
+  if (skillsSection) {
+    new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) animateSkillBars(skillsSection);
+    }, { threshold: 0.2 }).observe(skillsSection);
+  }
+</script>

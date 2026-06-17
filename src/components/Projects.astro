@@ -1,0 +1,479 @@
+---
+---
+
+<section id="projects" class="snap-section projects-snap">
+
+  <div class="snap-head">
+    <h2 class="section-title"><i class="fa-solid fa-folder-open"></i>projects</h2>
+
+    <div class="projects-filters">
+      <div class="projects-search-wrap">
+        <i class="fa-solid fa-magnifying-glass projects-search-icon" aria-hidden="true"></i>
+        <input id="projects-search" type="search" placeholder="search repos..."
+               aria-label="Search repositories" class="projects-search" />
+      </div>
+      <div class="projects-selects">
+        <select id="projects-lang" class="select-field" aria-label="Filter by language">
+          <option value="">All langs</option>
+        </select>
+        <select id="projects-sort" class="select-field" aria-label="Sort repositories"></select>
+      </div>
+      <button id="projects-clear" type="button" aria-label="Clear filters" class="outline-btn" hidden>
+        <i class="fa-solid fa-xmark"></i>clear
+      </button>
+    </div>
+
+    <div id="projects-count" class="projects-count" aria-live="polite" hidden></div>
+  </div>
+
+  <div class="snap-scroll-body">
+    <div id="projects-grid" class="projects-grid"></div>
+  </div>
+
+</section>
+
+<template id="tpl-project-sk">
+  <div class="project-card project-sk" aria-hidden="true">
+    <div class="card-front">
+      <div class="project-sk__header">
+        <div class="sk project-sk__icon"></div>
+        <div class="sk project-sk__title"></div>
+      </div>
+      <div class="sk project-sk__line"></div>
+      <div class="sk project-sk__line project-sk__line--short"></div>
+      <div class="project-sk__middle">
+        <div class="project-sk__tags">
+          <div class="sk project-sk__tag"></div>
+          <div class="sk project-sk__tag"></div>
+          <div class="sk project-sk__tag"></div>
+        </div>
+      </div>
+      <div class="project-sk__links">
+        <div class="sk project-sk__btn"></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-project-card">
+  <article class="project-card anim">
+    <div class="card-front">
+      <div class="project-card__header">
+        <div class="project-card__name-wrap">
+          <i class="fa-solid fa-folder-open project-card__name-icon"></i>
+          <span class="project-card__name"></span>
+        </div>
+      </div>
+      <p class="project-card__desc"></p>
+      <div class="card-middle">
+        <div class="project-card__stats">
+          <span class="project-card__stat js-stat-stars"><i class="fa-solid fa-star"></i></span>
+          <span class="project-card__stat js-stat-forks"><i class="fa-solid fa-code-branch"></i></span>
+          <span class="project-card__stat js-stat-updated"><i class="fa-solid fa-clock"></i></span>
+        </div>
+      </div>
+      <div class="project-card__links">
+        <a class="outline-btn project-card__link js-gh-link" target="_blank" rel="noreferrer">
+          <i class="fa-brands fa-github"></i>GitHub
+        </a>
+      </div>
+    </div>
+  </article>
+</template>
+
+<template id="tpl-project-card-npm">
+  <article class="project-card anim is-featured" data-npm="1">
+    <div class="card-inner">
+      <div class="card-front">
+        <div class="project-card__header">
+          <div class="project-card__name-wrap">
+            <i class="fa-solid fa-folder-open project-card__name-icon"></i>
+            <span class="project-card__name"></span>
+            <span class="tag project-card__featured"><i class="fa-solid fa-star"></i> featured</span>
+          </div>
+          <div class="card-header-end">
+            <button type="button" class="outline-btn card-flip-btn" aria-label="Show usage" title="Show usage">
+              <i class="fa-solid fa-terminal"></i>
+            </button>
+          </div>
+        </div>
+        <p class="project-card__desc"></p>
+        <div class="card-middle">
+          <div class="project-card__stats">
+            <span class="project-card__stat js-stat-stars"><i class="fa-solid fa-star"></i></span>
+            <span class="project-card__stat js-stat-forks"><i class="fa-solid fa-code-branch"></i></span>
+            <span class="project-card__stat js-stat-updated"><i class="fa-solid fa-clock"></i></span>
+          </div>
+        </div>
+        <div class="project-card__links">
+          <a class="outline-btn project-card__link js-npm-gh"   target="_blank" rel="noreferrer"><i class="fa-brands fa-github"></i>GitHub</a>
+          <a class="outline-btn project-card__link js-npm-demo" target="_blank" rel="noreferrer"><i class="fa-solid fa-bolt"></i>Demo</a>
+          <a class="outline-btn project-card__link js-npm-pkg"  target="_blank" rel="noreferrer"><i class="fa-brands fa-npm"></i>npm</a>
+        </div>
+      </div>
+      <div class="card-back">
+        <div class="card-back__head">
+          <span class="card-back__title">install &amp; usage</span>
+          <button type="button" class="outline-btn card-flip-close" aria-label="Back">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="card-back__install-row">
+          <code class="js-install-cmd"></code>
+          <button type="button" class="outline-btn js-copy-btn" aria-label="Copy install command">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+        </div>
+        <pre class="js-npm-snippet"></pre>
+      </div>
+    </div>
+  </article>
+</template>
+
+<template id="tpl-projects-empty">
+  <div class="projects-empty">
+    <i class="fa-solid fa-folder-open projects-empty__icon"></i>
+    <div class="projects-empty__msg"></div>
+  </div>
+</template>
+
+<script>
+  const GITHUB_USERNAME = 'devmdrd';
+  const NPM_PACKAGE     = 'axios-react-hook';
+  const NPM_DEMO_URL    = 'https://stackblitz.com/github/devmdrd/axios-react-hook/tree/playground';
+  const FEATURED_REPOS  = ['axios-react-hook'];
+  const CACHE_TTL       = 5 * 60 * 1000;
+  const TIMEOUT_MS      = 8000;
+  const NPM_SNIPPET     = "import useAxios from 'axios-react-hook'\n\nconst { data, loading, error } = useAxios({\n  url: 'https://api.example.com/posts',\n  params: { _limit: 5 },\n})";
+
+  const SORT_OPTIONS = [
+    { value: 'updated', label: 'Recently updated' },
+    { value: 'stars',   label: 'Most stars'       },
+    { value: 'forks',   label: 'Most forks'       },
+    { value: 'name',    label: 'Name A–Z'         },
+  ];
+
+  let _repos   = [];
+  let _query   = '';
+  let _lang    = '';
+  let _sort    = 'updated';
+  let _loading = true;
+  let _npmPkg  = null;
+
+  function readCache(key) {
+    try {
+      const raw = sessionStorage.getItem(key);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (Date.now() - parsed.ts > CACHE_TTL) { sessionStorage.removeItem(key); return null; }
+      return parsed.data;
+    } catch { return null; }
+  }
+
+  function writeCache(key, data) {
+    try { sessionStorage.setItem(key, JSON.stringify({ ts: Date.now(), data })); } catch {}
+  }
+
+  function fmt(n) { return n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n ?? 0); }
+
+  function formatRelativeDate(iso) {
+    if (!iso) return 'unknown';
+    const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+    if (days < 0)   return 'just now';
+    if (days === 0) return 'today';
+    if (days === 1) return 'yesterday';
+    if (days < 30)  return `${days}d ago`;
+    if (days < 365) return `${Math.floor(days / 30)}mo ago`;
+    return `${Math.floor(days / 365)}y ago`;
+  }
+
+  async function fetchNpm() {
+    const cached = readCache('gh_npm');
+    if (cached) return cached;
+    const [pRes, dRes] = await Promise.all([
+      fetch(`https://registry.npmjs.org/${NPM_PACKAGE}`, { signal: AbortSignal.timeout(TIMEOUT_MS) }),
+      fetch(`https://api.npmjs.org/downloads/point/last-week/${NPM_PACKAGE}`, { signal: AbortSignal.timeout(TIMEOUT_MS) }),
+    ]);
+    if (!pRes.ok) throw new Error(`npm_registry_${pRes.status}`);
+    const [pkg, dl] = await Promise.all([pRes.json(), dRes.json()]);
+    const result = { version: pkg['dist-tags']?.latest, downloads: dl.downloads ?? 0 };
+    writeCache('gh_npm', result);
+    return result;
+  }
+
+  function getFiltered() {
+    let list = _repos;
+    if (_query.trim()) {
+      const q = _query.toLowerCase();
+      list = list.filter(r => r.name.toLowerCase().includes(q) || (r.description || '').toLowerCase().includes(q) || (r.topics || []).some(t => t.toLowerCase().includes(q)));
+    }
+    if (_lang) list = list.filter(r => r.language === _lang);
+    const sorted = [...list].sort((a, b) => {
+      if (_sort === 'stars')  return b.stars - a.stars;
+      if (_sort === 'forks')  return b.forks - a.forks;
+      if (_sort === 'name')   return a.name.localeCompare(b.name);
+      return new Date(b.updatedAt) - new Date(a.updatedAt);
+    });
+    return [
+      ...sorted.filter(r =>  FEATURED_REPOS.includes(r.name)),
+      ...sorted.filter(r => !FEATURED_REPOS.includes(r.name)),
+    ];
+  }
+
+  function hasFilters() { return Boolean(_query || _lang || _sort !== 'updated'); }
+
+  function clearFilters() {
+    _query = ''; _lang = ''; _sort = 'updated';
+    const s = document.getElementById('projects-search');
+    const l = document.getElementById('projects-lang');
+    const o = document.getElementById('projects-sort');
+    if (s) s.value = '';
+    if (l) l.value = '';
+    if (o) o.value = 'updated';
+    renderProjects();
+  }
+
+  function buildCard(repo) {
+    const isNpm      = repo.name === NPM_PACKAGE;
+    const isFeatured = FEATURED_REPOS.includes(repo.name);
+    const extraUrl   = isNpm ? null : repo.homepage;
+    const dlsStat    = isNpm && _npmPkg?.downloads ? `${fmt(_npmPkg.downloads)}/wk` : null;
+
+    const tpl = document.getElementById(isNpm ? 'tpl-project-card-npm' : 'tpl-project-card');
+    if (!tpl) return null;
+    const node    = tpl.content.cloneNode(true);
+    const article = node.querySelector('article');
+    if (!article) return null;
+
+    article.setAttribute('aria-label', repo.name);
+    if (!isNpm && isFeatured) article.classList.add('is-featured');
+
+    node.querySelector('.project-card__name').textContent = repo.name;
+
+    if (!isNpm && isFeatured) {
+      const badge = document.createElement('span');
+      badge.className = 'tag project-card__featured';
+      const icon = document.createElement('i'); icon.className = 'fa-solid fa-star';
+      badge.appendChild(icon);
+      badge.appendChild(document.createTextNode(' featured'));
+      node.querySelector('.project-card__name-wrap').appendChild(badge);
+    }
+
+    if (repo.language) {
+      const langTag = document.createElement('span');
+      langTag.className = 'tag card-lang'; langTag.textContent = repo.language;
+      if (isNpm) {
+        const headerEnd = node.querySelector('.card-header-end');
+        headerEnd.insertBefore(langTag, headerEnd.firstChild);
+      } else {
+        node.querySelector('.project-card__header').appendChild(langTag);
+      }
+    }
+
+    const desc = node.querySelector('.project-card__desc');
+    desc.textContent = repo.description || 'No description';
+    if (!repo.description) desc.classList.add('project-card__desc--empty');
+
+    if (repo.topics?.length) {
+      const topicsDiv = document.createElement('div');
+      topicsDiv.className = 'project-card__topics';
+      repo.topics.forEach(t => {
+        const span = document.createElement('span'); span.className = 'topic'; span.textContent = t;
+        topicsDiv.appendChild(span);
+      });
+      const cardMiddle = node.querySelector('.card-middle');
+      cardMiddle.insertBefore(topicsDiv, cardMiddle.firstChild);
+    }
+
+    node.querySelector('.js-stat-stars').appendChild(document.createTextNode(fmt(repo.stars)));
+    node.querySelector('.js-stat-forks').appendChild(document.createTextNode(fmt(repo.forks)));
+    node.querySelector('.js-stat-updated').appendChild(document.createTextNode(formatRelativeDate(repo.updatedAt)));
+
+    if (dlsStat) {
+      const dlSpan = document.createElement('span'); dlSpan.className = 'project-card__stat';
+      const dlIcon = document.createElement('i'); dlIcon.className = 'fa-solid fa-download';
+      dlSpan.appendChild(dlIcon); dlSpan.appendChild(document.createTextNode(dlsStat));
+      node.querySelector('.project-card__stats').appendChild(dlSpan);
+    }
+
+    if (isNpm) {
+      node.querySelector('.js-npm-gh').href   = repo.url;
+      node.querySelector('.js-npm-demo').href  = NPM_DEMO_URL;
+      node.querySelector('.js-npm-pkg').href   = `https://www.npmjs.com/package/${NPM_PACKAGE}`;
+      const installCmd = `npm install ${NPM_PACKAGE}`;
+      node.querySelector('.js-install-cmd').textContent  = installCmd;
+      node.querySelector('.js-copy-btn').dataset.copyCmd = installCmd;
+      node.querySelector('.js-npm-snippet').textContent  = NPM_SNIPPET;
+      if (_npmPkg?.version) {
+        const verTag = document.createElement('span'); verTag.className = 'tag'; verTag.textContent = `v${_npmPkg.version}`;
+        const backHead = node.querySelector('.card-back__head');
+        backHead.insertBefore(verTag, backHead.querySelector('.card-flip-close'));
+      }
+    } else {
+      const ghLink = node.querySelector('.js-gh-link');
+      ghLink.href = repo.url;
+      ghLink.setAttribute('aria-label', `${repo.name} on GitHub`);
+      if (extraUrl) {
+        const demoLink = document.createElement('a');
+        demoLink.className = 'outline-btn project-card__link';
+        demoLink.href = extraUrl; demoLink.target = '_blank'; demoLink.rel = 'noreferrer';
+        demoLink.setAttribute('aria-label', `${repo.name} live demo`);
+        const globeIcon = document.createElement('i'); globeIcon.className = 'fa-solid fa-globe';
+        demoLink.appendChild(globeIcon); demoLink.appendChild(document.createTextNode('Live Demo'));
+        node.querySelector('.project-card__links').appendChild(demoLink);
+      }
+    }
+    return article;
+  }
+
+  function initAnimations(root) {
+    const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    root.querySelectorAll('.anim:not(.anim-visible)').forEach((el, i) => {
+      if (noMotion) el.classList.add('anim-visible');
+      else setTimeout(() => el.classList.add('anim-visible'), i * 50);
+    });
+  }
+
+  function renderProjects() {
+    const grid     = document.getElementById('projects-grid');
+    const clearBtn = document.getElementById('projects-clear');
+    const countEl  = document.getElementById('projects-count');
+    if (!grid) return;
+
+    if (clearBtn) clearBtn.hidden = !hasFilters();
+
+    if (_loading) {
+      grid.setAttribute('role', 'status');
+      grid.setAttribute('aria-label', 'Loading repositories');
+      const count = Number(sessionStorage.getItem('gh_repo_count') || localStorage.getItem('gh_repo_count') || 6);
+      const tplSk = document.getElementById('tpl-project-sk');
+      const frag  = document.createDocumentFragment();
+      for (let i = 0; i < count; i++) frag.appendChild(tplSk.content.cloneNode(true));
+      grid.replaceChildren(frag);
+      if (countEl) countEl.hidden = true;
+      return;
+    }
+
+    grid.removeAttribute('role'); grid.removeAttribute('aria-label');
+    const filtered = getFiltered();
+
+    if (!filtered.length) {
+      const noRepos   = !_repos.length;
+      const emptyNode = document.getElementById('tpl-projects-empty').content.cloneNode(true);
+      emptyNode.querySelector('.projects-empty__msg').textContent = noRepos ? 'No repositories found' : 'No results match your filters';
+      if (!noRepos && hasFilters()) {
+        const clearBtnEl = document.createElement('button');
+        clearBtnEl.type = 'button'; clearBtnEl.className = 'projects-empty__clear'; clearBtnEl.textContent = 'Clear filters';
+        clearBtnEl.addEventListener('click', clearFilters);
+        emptyNode.querySelector('.projects-empty').appendChild(clearBtnEl);
+      }
+      grid.replaceChildren(emptyNode);
+      if (countEl) countEl.hidden = true;
+      return;
+    }
+
+    if (countEl) {
+      countEl.hidden      = false;
+      countEl.textContent = `${filtered.length} ${filtered.length === 1 ? 'repo' : 'repos'}${hasFilters() ? ' matched' : ''}`;
+    }
+
+    const frag = document.createDocumentFragment();
+    filtered.forEach(repo => { const card = buildCard(repo); if (card) frag.appendChild(card); });
+    grid.replaceChildren(frag);
+    initAnimations(grid);
+  }
+
+  const sortSel  = document.getElementById('projects-sort');
+  const searchEl = document.getElementById('projects-search');
+  const langSel  = document.getElementById('projects-lang');
+  const clearBtn = document.getElementById('projects-clear');
+
+  if (sortSel) {
+    SORT_OPTIONS.forEach(o => sortSel.add(new Option(o.label, o.value)));
+    sortSel.value = 'updated';
+  }
+
+  let searchTimer;
+  if (searchEl) searchEl.addEventListener('input', () => { clearTimeout(searchTimer); searchTimer = setTimeout(() => { _query = searchEl.value; renderProjects(); }, 200); });
+  if (langSel)  langSel.addEventListener('change',  () => { _lang  = langSel.value;  renderProjects(); });
+  if (sortSel)  sortSel.addEventListener('change',  () => { _sort  = sortSel.value;  renderProjects(); });
+  if (clearBtn) clearBtn.addEventListener('click', clearFilters);
+
+  document.getElementById('projects-grid')?.addEventListener('click', e => {
+    const copyBtn = e.target.closest('[data-copy-cmd]');
+    if (copyBtn) {
+      navigator.clipboard?.writeText(copyBtn.dataset.copyCmd).then(() => {
+        const icon = copyBtn.querySelector('i');
+        if (icon) { icon.className = 'fa-solid fa-check'; setTimeout(() => { icon.className = 'fa-regular fa-copy'; }, 1500); }
+      }).catch(() => {
+        const icon = copyBtn.querySelector('i');
+        if (icon) { icon.className = 'fa-solid fa-xmark'; setTimeout(() => { icon.className = 'fa-regular fa-copy'; }, 1500); }
+      });
+      return;
+    }
+    if (e.target.closest('.card-flip-btn'))   { e.target.closest('[data-npm]')?.classList.add('flipped');    return; }
+    if (e.target.closest('.card-flip-close')) { e.target.closest('[data-npm]')?.classList.remove('flipped'); }
+  });
+
+  renderProjects();
+
+  async function fetchMain() {
+    const cached = readCache('gh_main');
+    if (cached) return cached;
+
+    const cached2 = readCache('gh_repos');
+    if (cached2) return cached2;
+
+    const [uRes, rRes] = await Promise.all([
+      fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, { signal: AbortSignal.timeout(TIMEOUT_MS) }),
+      fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`, { signal: AbortSignal.timeout(TIMEOUT_MS) }),
+    ]);
+
+    if (!uRes.ok) {
+      if (uRes.status === 403 || uRes.status === 429) {
+        const reset = uRes.headers.get('X-RateLimit-Reset');
+        const wait  = reset ? Math.ceil((Number(reset) * 1000 - Date.now()) / 60000) : 60;
+        throw Object.assign(new Error('rate_limited'), { retryAfter: wait });
+      }
+      throw new Error(`http_${uRes.status}`);
+    }
+
+    const user = await uRes.json();
+    if (!rRes.ok) throw new Error(`repos_http_${rRes.status}`);
+    const list = await rRes.json();
+    if (!Array.isArray(list)) throw new Error('repos_failed');
+
+    const nonFork = list.filter(r => !r.fork);
+    const repos   = nonFork.map(r => ({
+      id: r.id, name: r.name, description: r.description ?? '', stars: r.stargazers_count ?? 0,
+      forks: r.forks_count ?? 0, language: r.language ?? '', topics: r.topics ?? [],
+      updatedAt: r.updated_at, url: r.html_url, homepage: r.homepage ?? '',
+    }));
+
+    const result = { stats: { followers: user.followers, repos: nonFork.length, joinedAt: user.created_at }, langs: {}, repos };
+    writeCache('gh_repos', result);
+    return result;
+  }
+
+  Promise.allSettled([fetchMain(), fetchNpm()]).then(([mainR, npmR]) => {
+    _npmPkg = npmR.status === 'fulfilled' ? npmR.value : null;
+
+    const repos = mainR.status === 'fulfilled' ? mainR.value.repos : [];
+
+    try {
+      localStorage.setItem('gh_repo_count', repos.length);
+      sessionStorage.setItem('gh_repo_count', repos.length);
+    } catch {}
+
+    if (langSel) {
+      const langs   = [...new Set(repos.map(r => r.language).filter(Boolean))].sort();
+      const current = langSel.value;
+      while (langSel.options.length > 1) langSel.remove(1);
+      langs.forEach(l => langSel.add(new Option(l, l, false, l === current)));
+    }
+
+    _repos   = repos;
+    _loading = false;
+    renderProjects();
+  });
+</script>
