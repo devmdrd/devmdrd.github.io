@@ -576,30 +576,6 @@ hr {
 .about-intro .fa-angle-right { margin-right: 0.25rem; }
 
 
-
-.about-headline {
-  margin: 0 0 0.75rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.4rem 0.5rem;
-  font-size: var(--fs-sm);
-  color: var(--fg-secondary);
-}
-
-.about-headline span { display: inline-flex; align-items: center; gap: 0.35rem; }
-
-.about-headline__sep { color: var(--border); font-weight: 300; }
-
-.about-headline i { font-size: 0.65rem; color: var(--fg-secondary); }
-
-.about-quickfacts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 1.25rem;
-}
-
 .about-qf-chip {
   display: inline-flex;
   align-items: center;

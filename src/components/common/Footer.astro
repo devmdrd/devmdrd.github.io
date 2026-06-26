@@ -1,0 +1,12 @@
+<footer class="site-footer" aria-label="Site footer">
+  &copy; <span id="footer-year"></span> Muhammed Rashid
+</footer>
+
+<button id="back-top-btn" type="button" aria-label="Back to top" class="outline-btn back-top-btn">
+  <i class="fa-solid fa-arrow-up"></i>
+</button>
+
+<script>
+  const yearEl = document.getElementById('footer-year');
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+</script>

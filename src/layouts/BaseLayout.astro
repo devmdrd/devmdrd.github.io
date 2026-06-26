@@ -1,5 +1,8 @@
 ---
-import '../styles/global.css';
+import '../styles/global.scss';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import DotNav from '../components/common/DotNav.astro';
 
 interface Props {
   title?: string;
@@ -20,13 +23,13 @@ const {
 
   <title>{title}</title>
   <meta name="description" content={description} />
-  <meta name="author"      content="Muhammed Rashid" />
-  <meta name="robots"      content="index, follow" />
+  <meta name="author"  content="Muhammed Rashid" />
+  <meta name="robots"  content="index, follow" />
 
   <link rel="canonical" href="https://devmdrd.github.io/" />
 
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#ffffff"  media="(prefers-color-scheme: light)" />
 
   <meta property="og:type"        content="website" />
   <meta property="og:site_name"   content="Muhammed Rashid Portfolio" />
@@ -86,14 +89,13 @@ const {
     (function () {
       var s = localStorage.getItem('theme');
       document.documentElement.dataset.theme =
-        (s === 'dark' || s === 'light') ? s
-        : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        s === 'dark' || s === 'light' ? s
+        : window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }());
   </script>
 </head>
 
 <body>
-
   <a href="#about" class="skip-link">Skip to main content</a>
 
   <div id="loader" class="loader" role="status" aria-label="Loading portfolio">
@@ -106,83 +108,19 @@ const {
     <p class="loader__user">@devmdrd</p>
   </div>
 
-  <nav class="dot-nav" aria-label="Section navigation">
-    <button class="dot-nav__btn active" data-section="about"      aria-label="Go to About"      aria-current="location"></button>
-    <button class="dot-nav__btn"        data-section="skills"     aria-label="Go to Skills"></button>
-    <button class="dot-nav__btn"        data-section="experience" aria-label="Go to Experience"></button>
-    <button class="dot-nav__btn"        data-section="projects"   aria-label="Go to Projects"></button>
-    <button class="dot-nav__btn github-mobile-dot" data-section="github" aria-label="Go to GitHub"></button>
-    <button class="dot-nav__btn"        data-section="education"  aria-label="Go to Education"></button>
-    <button class="dot-nav__btn"        data-section="contact"    aria-label="Go to Contact"></button>
-  </nav>
-
-  <header class="site-header">
-    <div class="header-logo">
-      <img src="/assets/images/profile.webp" alt="" aria-hidden="true" width="28" height="28" class="header-avatar" />
-      devmdrd
-    </div>
-    <div class="header-end">
-      <button id="theme-toggle" type="button" class="outline-btn" aria-label="Switch to light theme">
-        <i class="fa-solid fa-sun"></i>
-      </button>
-      <span id="theme-announce" class="sr-only" aria-live="polite"></span>
-      <a href="/resume.pdf" target="_blank" rel="noreferrer" class="filled-btn" aria-label="Download resume">
-        <i class="fa-solid fa-download"></i><span>resume</span>
-      </a>
-    </div>
-    <div id="scroll-progress" class="header-progress" aria-hidden="true"></div>
-  </header>
+  <DotNav />
+  <Header />
 
   <main class="main-content">
     <slot />
   </main>
 
-  <footer class="site-footer" aria-label="Site footer">
-    &copy; <span id="footer-year"></span> Muhammed Rashid
-  </footer>
-
-  <button id="back-top-btn" type="button" aria-label="Back to top" class="outline-btn back-top-btn">
-    <i class="fa-solid fa-arrow-up"></i>
-  </button>
+  <Footer />
 
   <script defer src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/countup.js@2.8.0/dist/countUp.umd.js"></script>
 
   <script>
-    const yearEl = document.getElementById('footer-year');
-    if (yearEl) yearEl.textContent = String(new Date().getFullYear());
-
-    const THEME_KEY = 'theme';
-
-    function getTheme(): string {
-      return document.documentElement.dataset.theme ?? 'dark';
-    }
-
-    function debounce(fn: () => void, ms: number) {
-      let timer: ReturnType<typeof setTimeout>;
-      return () => { clearTimeout(timer); timer = setTimeout(fn, ms); };
-    }
-
-    function applyTheme(theme: string): void {
-      document.documentElement.dataset.theme = theme;
-      const btn      = document.getElementById('theme-toggle');
-      const icon     = btn?.querySelector('i');
-      const announce = document.getElementById('theme-announce');
-      if (icon)     icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-      if (btn)      btn.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`);
-      if (announce) announce.textContent = `${theme} mode enabled`;
-      localStorage.setItem(THEME_KEY, theme);
-    }
-
-    const stored = localStorage.getItem(THEME_KEY);
-    const initial = (stored === 'dark' || stored === 'light') ? stored
-      : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    applyTheme(initial);
-
-    document.getElementById('theme-toggle')?.addEventListener('click', debounce(() => {
-      applyTheme(getTheme() === 'dark' ? 'light' : 'dark');
-    }, 200));
-
     const LAST_SECTION_KEY = 'lastSection';
     const sections  = Array.from(document.querySelectorAll<HTMLElement>('section[id]'));
     const total     = sections.length;
@@ -223,8 +161,7 @@ const {
 
     document.querySelectorAll<HTMLElement>('.dot-nav__btn[data-section]').forEach(btn => {
       btn.addEventListener('click', () => {
-        const s = document.getElementById(btn.dataset.section!);
-        if (s) s.scrollIntoView({ behavior: 'smooth' });
+        document.getElementById(btn.dataset.section!)?.scrollIntoView({ behavior: 'smooth' });
       });
     });
 
@@ -248,6 +185,5 @@ const {
       document.dispatchEvent(new CustomEvent('portfolio:ready'));
     }
   </script>
-
 </body>
 </html>
