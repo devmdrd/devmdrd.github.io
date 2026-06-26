@@ -7,6 +7,7 @@ Personal portfolio site built with Astro, deployed on GitHub Pages.
 ## Stack
 
 - [Astro](https://astro.build) — static site generator
+- [Sass](https://sass-lang.com) — CSS preprocessor
 - [Fira Code](https://fonts.google.com/specimen/Fira+Code) — monospace font
 - [Font Awesome](https://fontawesome.com) — icons
 - [Typed.js](https://mattboldt.com/demos/typed-js/) — typing animation
@@ -33,6 +34,10 @@ Personal portfolio site built with Astro, deployed on GitHub Pages.
 ├── src/
 │   ├── layouts/BaseLayout.astro
 │   ├── components/
+│   │   ├── common/
+│   │   │   ├── Header.astro
+│   │   │   ├── Footer.astro
+│   │   │   └── DotNav.astro
 │   │   ├── About.astro
 │   │   ├── Skills.astro
 │   │   ├── Experience.astro
@@ -41,7 +46,7 @@ Personal portfolio site built with Astro, deployed on GitHub Pages.
 │   │   ├── Education.astro
 │   │   └── Contact.astro
 │   ├── pages/index.astro
-│   └── styles/global.css
+│   └── styles/global.scss
 ├── public/
 │   ├── favicon.svg
 │   ├── robots.txt
